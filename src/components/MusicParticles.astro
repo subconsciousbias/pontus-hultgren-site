@@ -1,0 +1,103 @@
+---
+// Floating music notes particle effect
+---
+
+<div id="music-particles" class="music-particles" aria-hidden="true"></div>
+
+<style>
+  .music-particles {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    pointer-events: none;
+    z-index: 1;
+    overflow: hidden;
+  }
+
+  .music-note {
+    position: absolute;
+    font-size: 1.5rem;
+    color: rgba(212, 175, 55, 0.15);
+    animation: floatUp linear infinite;
+    pointer-events: none;
+    user-select: none;
+  }
+
+  @keyframes floatUp {
+    0% {
+      transform: translateY(100vh) rotate(0deg) scale(0.5);
+      opacity: 0;
+    }
+    10% {
+      opacity: 1;
+    }
+    90% {
+      opacity: 1;
+    }
+    100% {
+      transform: translateY(-10vh) rotate(360deg) scale(1);
+      opacity: 0;
+    }
+  }
+
+  .music-note:nth-child(even) {
+    animation-timing-function: ease-in-out;
+  }
+
+  /* Different note styles */
+  .music-note.glow {
+    text-shadow: 0 0 10px rgba(212, 175, 55, 0.5);
+  }
+</style>
+
+<script>
+  const particles = document.getElementById('music-particles');
+  const notes = ['♪', '♫', '♬', '♩', '𝄞', '𝄢'];
+
+  function createNote() {
+    const note = document.createElement('span');
+    note.className = 'music-note';
+    note.textContent = notes[Math.floor(Math.random() * notes.length)];
+    note.style.left = Math.random() * 100 + 'vw';
+    note.style.animationDuration = (15 + Math.random() * 20) + 's';
+    note.style.animationDelay = Math.random() * 5 + 's';
+    note.style.fontSize = (0.8 + Math.random() * 1.2) + 'rem';
+    note.style.opacity = (0.05 + Math.random() * 0.15).toString();
+
+    if (Math.random() > 0.7) {
+      note.classList.add('glow');
+    }
+
+    particles?.appendChild(note);
+
+    // Remove after animation
+    setTimeout(() => {
+      note.remove();
+    }, 35000);
+  }
+
+  // Create initial notes
+  for (let i = 0; i < 15; i++) {
+    setTimeout(createNote, i * 500);
+  }
+
+  // Continuously create new notes
+  setInterval(createNote, 2000);
+
+  // Reduce particles when piano is open (performance)
+  const pianoContainer = document.getElementById('piano-container');
+  const observer = new MutationObserver((mutations) => {
+    mutations.forEach((mutation) => {
+      if (mutation.attributeName === 'class') {
+        const isVisible = pianoContainer?.classList.contains('visible');
+        particles!.style.opacity = isVisible ? '0.3' : '1';
+      }
+    });
+  });
+
+  if (pianoContainer) {
+    observer.observe(pianoContainer, { attributes: true });
+  }
+</script>

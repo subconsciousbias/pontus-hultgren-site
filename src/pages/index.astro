@@ -3,11 +3,15 @@ import Layout from '../layouts/Layout.astro';
 ---
 
 <Layout title="Pontus Hultgren | Video Game Music Orchestrator">
-  <section class="gradient-hero min-h-[80vh] flex items-center justify-center text-center px-6">
-    <div class="max-w-4xl">
-      <img src="/profile.png" alt="Pontus Hultgren" class="w-32 h-32 md:w-40 md:h-40 rounded-full mx-auto mb-8 border-4 border-accent-gold/30 shadow-xl" />
-      <h1 class="text-5xl md:text-7xl font-heading font-bold mb-4 gold-glow">PONTUS HULTGREN</h1>
-      <p class="text-xl md:text-2xl text-text-secondary mb-8">Video Game Music Orchestrator</p>
+  <section class="gradient-hero min-h-[85vh] flex items-center justify-center text-center px-6 relative overflow-hidden">
+    <!-- Decorative background elements -->
+    <div class="absolute top-20 left-10 w-72 h-72 bg-accent-gold/5 rounded-full blur-3xl animate-pulse-slow"></div>
+    <div class="absolute bottom-20 right-10 w-96 h-96 bg-accent-blue/5 rounded-full blur-3xl animate-pulse-slow" style="animation-delay: 1s;"></div>
+
+    <div class="max-w-4xl relative z-10">
+      <img src="/profile.jpg" alt="Pontus Hultgren" class="w-36 h-36 md:w-44 md:h-44 rounded-full mx-auto mb-8 border-4 border-accent-gold/30 shadow-2xl object-cover hover:border-accent-gold/50 transition-all duration-300 hover:scale-105" />
+      <h1 class="text-5xl md:text-7xl font-heading font-bold mb-4 gold-glow animate-fade-in">PONTUS HULTGREN</h1>
+      <p id="typewriter" class="text-xl md:text-2xl text-text-secondary mb-8 animate-fade-in-delay h-8"></p>
       <div class="flex flex-wrap justify-center gap-8 mb-12">
         <div class="stat-item text-center">
           <div class="text-3xl font-bold text-accent-gold font-mono">31K+</div>
@@ -55,9 +59,9 @@ import Layout from '../layouts/Layout.astro';
     <div class="max-w-6xl mx-auto px-6">
       <h2 class="text-3xl font-heading font-bold mb-8 text-center">Popular Works</h2>
       <div class="grid sm:grid-cols-2 lg:grid-cols-3 gap-6">
-        <div class="card p-6 text-center"><div class="text-4xl mb-4">FF</div><h3 class="font-semibold mb-2">Final Fantasy</h3><p class="text-text-secondary text-sm">Orchestral tributes to the legendary JRPG series</p></div>
-        <div class="card p-6 text-center"><div class="text-4xl mb-4">DS</div><h3 class="font-semibold mb-2">Dark Souls</h3><p class="text-text-secondary text-sm">Epic arrangements from the Souls series</p></div>
-        <div class="card p-6 text-center"><div class="text-4xl mb-4">CT</div><h3 class="font-semibold mb-2">Chrono Trigger</h3><p class="text-text-secondary text-sm">Timeless classics reimagined</p></div>
+        <div class="card card-tilt p-6 text-center"><div class="text-4xl mb-4">FF</div><h3 class="font-semibold mb-2">Final Fantasy</h3><p class="text-text-secondary text-sm">Orchestral tributes to the legendary JRPG series</p></div>
+        <div class="card card-tilt p-6 text-center"><div class="text-4xl mb-4">DS</div><h3 class="font-semibold mb-2">Dark Souls</h3><p class="text-text-secondary text-sm">Epic arrangements from the Souls series</p></div>
+        <div class="card card-tilt p-6 text-center"><div class="text-4xl mb-4">CT</div><h3 class="font-semibold mb-2">Chrono Trigger</h3><p class="text-text-secondary text-sm">Timeless classics reimagined</p></div>
       </div>
     </div>
   </section>
@@ -67,4 +71,128 @@ import Layout from '../layouts/Layout.astro';
     <p class="text-text-secondary mb-8 max-w-2xl mx-auto">Join 238 patrons supporting new orchestral arrangements every month.</p>
     <a href="https://patreon.com/pontuscomposer" target="_blank" class="btn-primary">Become a Patron</a>
   </section>
+
+  <!-- Confetti container for easter egg -->
+  <div id="confetti-container" class="fixed inset-0 pointer-events-none z-[200]"></div>
 </Layout>
+
+<style>
+  /* 3D Tilt Effect */
+  .card-tilt {
+    transform-style: preserve-3d;
+    transition: transform 0.15s ease-out;
+  }
+
+  .card-tilt:hover {
+    transform: perspective(1000px) rotateX(var(--rotateX, 0deg)) rotateY(var(--rotateY, 0deg)) scale(1.02);
+  }
+
+  /* Confetti */
+  .confetti {
+    position: absolute;
+    width: 10px;
+    height: 10px;
+    animation: confetti-fall 3s ease-out forwards;
+  }
+
+  @keyframes confetti-fall {
+    0% {
+      opacity: 1;
+      transform: translateY(0) rotate(0deg);
+    }
+    100% {
+      opacity: 0;
+      transform: translateY(100vh) rotate(720deg);
+    }
+  }
+
+  /* Typewriter cursor */
+  #typewriter::after {
+    content: '|';
+    animation: blink 0.7s infinite;
+    color: #d4af37;
+  }
+
+  @keyframes blink {
+    0%, 50% { opacity: 1; }
+    51%, 100% { opacity: 0; }
+  }
+</style>
+
+<script>
+  // Typewriter effect
+  const typewriter = document.getElementById('typewriter');
+  const text = 'Video Game Music Orchestrator';
+  let i = 0;
+
+  function type() {
+    if (i < text.length) {
+      typewriter.textContent += text.charAt(i);
+      i++;
+      setTimeout(type, 80);
+    }
+  }
+
+  setTimeout(type, 500);
+
+  // 3D Tilt effect on cards
+  document.querySelectorAll('.card-tilt').forEach(function(card) {
+    card.addEventListener('mousemove', function(e) {
+      var rect = card.getBoundingClientRect();
+      var x = e.clientX - rect.left;
+      var y = e.clientY - rect.top;
+      var centerX = rect.width / 2;
+      var centerY = rect.height / 2;
+      var rotateX = (y - centerY) / 10;
+      var rotateY = (centerX - x) / 10;
+      card.style.setProperty('--rotateX', rotateX + 'deg');
+      card.style.setProperty('--rotateY', rotateY + 'deg');
+    });
+
+    card.addEventListener('mouseleave', function() {
+      card.style.setProperty('--rotateX', '0deg');
+      card.style.setProperty('--rotateY', '0deg');
+    });
+  });
+
+  // Konami Code Easter Egg
+  var konamiCode = ['ArrowUp', 'ArrowUp', 'ArrowDown', 'ArrowDown', 'ArrowLeft', 'ArrowRight', 'ArrowLeft', 'ArrowRight', 'b', 'a'];
+  var konamiIndex = 0;
+
+  document.addEventListener('keydown', function(e) {
+    if (e.key === konamiCode[konamiIndex]) {
+      konamiIndex++;
+      if (konamiIndex === konamiCode.length) {
+        triggerEasterEgg();
+        konamiIndex = 0;
+      }
+    } else {
+      konamiIndex = 0;
+    }
+  });
+
+  function triggerEasterEgg() {
+    var container = document.getElementById('confetti-container');
+    var colors = ['#d4af37', '#ffd700', '#ff6b6b', '#4ecdc4', '#45b7d1', '#96ceb4'];
+
+    for (var i = 0; i < 150; i++) {
+      var confetti = document.createElement('div');
+      confetti.className = 'confetti';
+      confetti.style.left = Math.random() * 100 + 'vw';
+      confetti.style.top = '-20px';
+      confetti.style.backgroundColor = colors[Math.floor(Math.random() * colors.length)];
+      confetti.style.animationDelay = Math.random() * 2 + 's';
+      confetti.style.animationDuration = (2 + Math.random() * 2) + 's';
+      confetti.style.borderRadius = Math.random() > 0.5 ? '50%' : '0';
+      container.appendChild(confetti);
+
+      setTimeout(function() { confetti.remove(); }, 5000);
+    }
+
+    // Flash gold glow on page
+    document.body.style.boxShadow = 'inset 0 0 100px rgba(212, 175, 55, 0.5)';
+    setTimeout(function() {
+      document.body.style.boxShadow = '';
+    }, 1000);
+  }
+</script>

@@ -1,0 +1,1209 @@
+---
+// Piano component - Beautiful Interactive MIDI Keyboard
+---
+
+<div id="piano-container" class="piano-container visible">
+  <!-- Piano Body with Wood Grain Effect -->
+  <div class="piano-body">
+    <!-- Header Bar -->
+    <div class="piano-header">
+      <div class="piano-brand">
+        <div class="brand-logo">
+          <svg class="w-5 h-5" viewBox="0 0 24 24" fill="currentColor">
+            <path d="M12 3v10.55c-.59-.34-1.27-.55-2-.55-2.21 0-4 1.79-4 4s1.79 4 4 4 4-1.79 4-4V7h4V3h-6z"/>
+          </svg>
+        </div>
+        <span class="brand-text">Virtual Piano</span>
+        <div class="brand-divider"></div>
+        <span class="brand-subtitle">by Pontus Hultgren</span>
+      </div>
+
+      <div class="piano-controls-center">
+        <label class="control-btn upload-btn">
+          <input type="file" id="midi-upload" accept=".mid,.midi" class="hidden" />
+          <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 19V6l12-3v13M9 19c0 1.105-1.343 2-3 2s-3-.895-3-2 1.343-2 3-2 3 .895 3 2zm12-3c0 1.105-1.343 2-3 2s-3-.895-3-2 1.343-2 3-2 3 .895 3 2zM9 10l12-3"/>
+          </svg>
+          <span>Load MIDI</span>
+        </label>
+        <button id="midi-play" class="control-btn play-btn hidden">
+          <svg class="w-4 h-4" fill="currentColor" viewBox="0 0 24 24">
+            <path d="M8 5v14l11-7z"/>
+          </svg>
+          <span>Play</span>
+        </button>
+        <button id="midi-stop" class="control-btn stop-btn hidden">
+          <svg class="w-4 h-4" fill="currentColor" viewBox="0 0 24 24">
+            <rect x="6" y="6" width="12" height="12" rx="1"/>
+          </svg>
+          <span>Stop</span>
+        </button>
+        <span id="midi-name" class="midi-filename"></span>
+      </div>
+
+      <div class="piano-controls-right">
+        <div class="volume-control">
+          <svg class="w-4 h-4 volume-icon" fill="currentColor" viewBox="0 0 24 24">
+            <path d="M3 9v6h4l5 5V4L7 9H3zm13.5 3c0-1.77-1.02-3.29-2.5-4.03v8.05c1.48-.73 2.5-2.25 2.5-4.02z"/>
+          </svg>
+          <input type="range" id="piano-volume" min="0" max="100" value="70" class="volume-slider" />
+          <span class="volume-value">70%</span>
+        </div>
+        <button id="piano-minimize" class="control-btn minimize-btn" aria-label="Minimize piano">
+          <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7"/>
+          </svg>
+        </button>
+      </div>
+    </div>
+
+    <!-- Audio Visualizer -->
+    <div id="audio-visualizer" class="audio-visualizer">
+      <div class="viz-bar"></div>
+      <div class="viz-bar"></div>
+      <div class="viz-bar"></div>
+      <div class="viz-bar"></div>
+      <div class="viz-bar"></div>
+      <div class="viz-bar"></div>
+      <div class="viz-bar"></div>
+      <div class="viz-bar"></div>
+      <div class="viz-bar"></div>
+      <div class="viz-bar"></div>
+      <div class="viz-bar"></div>
+      <div class="viz-bar"></div>
+    </div>
+
+    <!-- Piano Lid Reflection -->
+    <div class="piano-lid-reflection"></div>
+
+    <!-- Keyboard Section -->
+    <div class="piano-keyboard-section">
+      <div class="keyboard-rail-top"></div>
+      <div class="piano-keyboard-wrapper">
+        <div id="piano-keyboard" class="piano-keyboard"></div>
+      </div>
+      <div class="keyboard-rail-bottom"></div>
+    </div>
+
+    <!-- Footer -->
+    <div class="piano-footer">
+      <div class="footer-hint">
+        <kbd>A</kbd><kbd>S</kbd><kbd>D</kbd><kbd>F</kbd> to play white keys
+        <span class="hint-divider">•</span>
+        <kbd>W</kbd><kbd>E</kbd><kbd>T</kbd><kbd>Y</kbd> for black keys
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- Floating Piano Toggle Button -->
+<button id="piano-toggle" class="piano-toggle-btn active" aria-label="Toggle piano keyboard">
+  <div class="toggle-icon">
+    <svg viewBox="0 0 32 32" fill="none" stroke="currentColor" stroke-width="1.5">
+      <rect x="4" y="8" width="24" height="16" rx="2"/>
+      <line x1="10" y1="8" x2="10" y2="24"/>
+      <line x1="16" y1="8" x2="16" y2="24"/>
+      <line x1="22" y1="8" x2="22" y2="24"/>
+      <rect x="7" y="8" width="4" height="10" fill="currentColor" rx="0.5"/>
+      <rect x="13" y="8" width="4" height="10" fill="currentColor" rx="0.5"/>
+      <rect x="21" y="8" width="4" height="10" fill="currentColor" rx="0.5"/>
+    </svg>
+  </div>
+  <span class="toggle-label">Piano</span>
+</button>
+
+<style>
+  /* Piano Container */
+  .piano-container {
+    position: fixed;
+    bottom: 0;
+    left: 0;
+    right: 0;
+    z-index: 100;
+    transform: translateY(100%);
+    transition: transform 0.5s cubic-bezier(0.34, 1.56, 0.64, 1);
+    pointer-events: none;
+  }
+
+  .piano-container.visible {
+    transform: translateY(0);
+    pointer-events: auto;
+  }
+
+  /* Piano Body - Elegant Dark Wood */
+  .piano-body {
+    background: linear-gradient(180deg,
+      #1a1a1a 0%,
+      #0d0d0d 50%,
+      #050505 100%
+    );
+    border-top: 1px solid rgba(212, 175, 55, 0.4);
+    box-shadow:
+      0 -20px 60px rgba(0, 0, 0, 0.8),
+      inset 0 1px 0 rgba(255, 255, 255, 0.05),
+      inset 0 -1px 0 rgba(0, 0, 0, 0.5);
+    position: relative;
+    overflow: hidden;
+  }
+
+  /* Subtle wood grain texture */
+  .piano-body::before {
+    content: '';
+    position: absolute;
+    inset: 0;
+    background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 100 100' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noise'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.8' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noise)'/%3E%3C/svg%3E");
+    opacity: 0.02;
+    pointer-events: none;
+  }
+
+  /* Header */
+  .piano-header {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 0.75rem 1.25rem;
+    background: linear-gradient(180deg,
+      rgba(30, 30, 30, 0.9) 0%,
+      rgba(20, 20, 20, 0.95) 100%
+    );
+    border-bottom: 1px solid rgba(255, 255, 255, 0.03);
+    position: relative;
+    z-index: 10;
+  }
+
+  /* Brand Section */
+  .piano-brand {
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+  }
+
+  .brand-logo {
+    width: 28px;
+    height: 28px;
+    background: linear-gradient(135deg, #d4af37 0%, #b8941f 100%);
+    border-radius: 6px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    color: #0a0a0a;
+    box-shadow: 0 2px 8px rgba(212, 175, 55, 0.3);
+  }
+
+  .brand-text {
+    font-family: 'Playfair Display', serif;
+    font-weight: 700;
+    font-size: 1rem;
+    background: linear-gradient(135deg, #d4af37 0%, #f0d77c 50%, #d4af37 100%);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    background-clip: text;
+    letter-spacing: 0.02em;
+  }
+
+  .brand-divider {
+    width: 1px;
+    height: 16px;
+    background: rgba(255, 255, 255, 0.1);
+    margin: 0 0.25rem;
+  }
+
+  .brand-subtitle {
+    font-size: 0.7rem;
+    color: rgba(255, 255, 255, 0.3);
+    font-style: italic;
+  }
+
+  /* Control Buttons */
+  .piano-controls-center {
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+  }
+
+  .control-btn {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.4rem;
+    padding: 0.5rem 0.875rem;
+    background: rgba(255, 255, 255, 0.03);
+    border: 1px solid rgba(255, 255, 255, 0.08);
+    border-radius: 8px;
+    color: rgba(255, 255, 255, 0.6);
+    font-size: 0.8rem;
+    font-weight: 500;
+    cursor: pointer;
+    transition: all 0.2s ease;
+    font-family: inherit;
+  }
+
+  .control-btn:hover {
+    background: rgba(212, 175, 55, 0.1);
+    border-color: rgba(212, 175, 55, 0.3);
+    color: #d4af37;
+    transform: translateY(-1px);
+  }
+
+  .control-btn:active {
+    transform: translateY(0);
+  }
+
+  .upload-btn:hover {
+    box-shadow: 0 4px 12px rgba(212, 175, 55, 0.2);
+  }
+
+  .play-btn {
+    background: rgba(76, 175, 80, 0.1);
+    border-color: rgba(76, 175, 80, 0.3);
+    color: #4CAF50;
+  }
+
+  .play-btn:hover {
+    background: rgba(76, 175, 80, 0.2);
+    border-color: rgba(76, 175, 80, 0.5);
+    color: #66BB6A;
+  }
+
+  .stop-btn {
+    background: rgba(244, 67, 54, 0.1);
+    border-color: rgba(244, 67, 54, 0.3);
+    color: #f44336;
+  }
+
+  .stop-btn:hover {
+    background: rgba(244, 67, 54, 0.2);
+    border-color: rgba(244, 67, 54, 0.5);
+    color: #EF5350;
+  }
+
+  .minimize-btn {
+    padding: 0.5rem;
+    border-radius: 50%;
+  }
+
+  .midi-filename {
+    font-size: 0.75rem;
+    color: rgba(212, 175, 55, 0.8);
+    max-width: 150px;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+  }
+
+  /* Volume Control */
+  .piano-controls-right {
+    display: flex;
+    align-items: center;
+    gap: 1rem;
+  }
+
+  .volume-control {
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+    padding: 0.375rem 0.75rem;
+    background: rgba(255, 255, 255, 0.02);
+    border-radius: 20px;
+  }
+
+  .volume-icon {
+    color: rgba(255, 255, 255, 0.4);
+  }
+
+  .volume-slider {
+    width: 80px;
+    height: 4px;
+    -webkit-appearance: none;
+    appearance: none;
+    background: rgba(255, 255, 255, 0.1);
+    border-radius: 2px;
+    cursor: pointer;
+  }
+
+  .volume-slider::-webkit-slider-thumb {
+    -webkit-appearance: none;
+    width: 14px;
+    height: 14px;
+    background: linear-gradient(135deg, #d4af37, #b8941f);
+    border-radius: 50%;
+    cursor: pointer;
+    box-shadow: 0 2px 6px rgba(0, 0, 0, 0.3);
+    transition: transform 0.15s ease, box-shadow 0.15s ease;
+  }
+
+  .volume-slider::-webkit-slider-thumb:hover {
+    transform: scale(1.15);
+    box-shadow: 0 0 12px rgba(212, 175, 55, 0.5);
+  }
+
+  .volume-value {
+    font-size: 0.7rem;
+    color: rgba(255, 255, 255, 0.4);
+    min-width: 28px;
+    font-variant-numeric: tabular-nums;
+  }
+
+  /* Audio Visualizer */
+  .audio-visualizer {
+    display: flex;
+    justify-content: center;
+    align-items: flex-end;
+    gap: 3px;
+    height: 30px;
+    padding: 4px 20px;
+    background: rgba(0, 0, 0, 0.2);
+  }
+
+  .viz-bar {
+    width: 8px;
+    height: 4px;
+    min-height: 4px;
+    background: linear-gradient(180deg, #d4af37 0%, #b8941f 100%);
+    border-radius: 2px;
+    transition: height 0.05s ease-out;
+    box-shadow: 0 0 8px rgba(212, 175, 55, 0.3);
+  }
+
+  .viz-bar.active {
+    animation: vizPulse 0.15s ease-out;
+  }
+
+  @keyframes vizPulse {
+    0% { height: 4px; }
+    50% { height: 24px; }
+    100% { height: 4px; }
+  }
+
+  /* Lid Reflection Effect */
+  .piano-lid-reflection {
+    height: 3px;
+    background: linear-gradient(90deg,
+      transparent 0%,
+      rgba(212, 175, 55, 0.1) 20%,
+      rgba(212, 175, 55, 0.2) 50%,
+      rgba(212, 175, 55, 0.1) 80%,
+      transparent 100%
+    );
+  }
+
+  /* Keyboard Section */
+  .piano-keyboard-section {
+    position: relative;
+    background: linear-gradient(180deg, #0a0a0a 0%, #050505 100%);
+  }
+
+  .keyboard-rail-top {
+    height: 8px;
+    background: linear-gradient(180deg,
+      #2a2a2a 0%,
+      #1a1a1a 50%,
+      #0a0a0a 100%
+    );
+    box-shadow: inset 0 2px 4px rgba(0, 0, 0, 0.5);
+  }
+
+  .keyboard-rail-bottom {
+    height: 12px;
+    background: linear-gradient(180deg,
+      #1a1a1a 0%,
+      #0d0d0d 100%
+    );
+    box-shadow: inset 0 2px 4px rgba(0, 0, 0, 0.3);
+  }
+
+  .piano-keyboard-wrapper {
+    overflow-x: auto;
+    overflow-y: hidden;
+    padding: 0;
+    display: flex;
+    justify-content: center;
+    background: linear-gradient(180deg,
+      rgba(0, 0, 0, 0.3) 0%,
+      transparent 20%,
+      transparent 80%,
+      rgba(0, 0, 0, 0.2) 100%
+    );
+    scrollbar-width: none;
+  }
+
+  .piano-keyboard-wrapper::-webkit-scrollbar {
+    display: none;
+  }
+
+  #piano-keyboard {
+    display: flex;
+    position: relative;
+    height: 160px;
+    padding: 0 2px;
+    user-select: none;
+  }
+
+  /* Piano Keys - Realistic Styling (global for dynamic elements) */
+  :global(.piano-key) {
+    position: relative;
+    cursor: pointer;
+    transition: all 0.06s ease-out;
+    flex-shrink: 0;
+    box-sizing: border-box;
+  }
+
+  /* White Keys */
+  :global(.piano-key.white) {
+    width: 36px;
+    min-width: 36px;
+    height: 160px;
+    background: linear-gradient(180deg,
+      #f5f5f5 0%,
+      #ffffff 2%,
+      #f8f8f8 10%,
+      #ebebeb 90%,
+      #d8d8d8 98%,
+      #c8c8c8 100%
+    );
+    border: none;
+    border-left: 1px solid #bbb;
+    border-radius: 0 0 5px 5px;
+    z-index: 1;
+    box-shadow:
+      inset 0 -3px 0 #c0c0c0,
+      inset 0 0 0 1px rgba(255, 255, 255, 0.5),
+      0 4px 3px rgba(0, 0, 0, 0.4),
+      0 8px 10px rgba(0, 0, 0, 0.2);
+    transform-origin: top center;
+  }
+
+  :global(.piano-key.white:first-child) {
+    border-left: none;
+  }
+
+  :global(.piano-key.white:hover) {
+    background: linear-gradient(180deg,
+      #ffffff 0%,
+      #ffffff 10%,
+      #fafafa 90%,
+      #e8e8e8 100%
+    );
+  }
+
+  :global(.piano-key.white.active) {
+    background: linear-gradient(180deg,
+      #ffd700 0%,
+      #ffdc4d 10%,
+      #f5c800 50%,
+      #d4a500 90%,
+      #b8941f 100%
+    );
+    transform: perspective(500px) rotateX(-1.5deg) translateY(3px);
+    box-shadow:
+      inset 0 -1px 0 #9a7b15,
+      inset 0 0 0 1px rgba(255, 255, 255, 0.3),
+      0 2px 2px rgba(0, 0, 0, 0.4),
+      0 0 20px rgba(212, 175, 55, 0.4);
+  }
+
+  /* Black Keys */
+  :global(.piano-key.black) {
+    position: absolute;
+    width: 22px;
+    height: 100px;
+    background: linear-gradient(180deg,
+      #3a3a3a 0%,
+      #2a2a2a 5%,
+      #1a1a1a 50%,
+      #0f0f0f 95%,
+      #000000 100%
+    );
+    border-radius: 0 0 4px 4px;
+    z-index: 2;
+    margin-left: -11px;
+    box-shadow:
+      inset 0 -2px 0 #0a0a0a,
+      inset 2px 0 2px rgba(255, 255, 255, 0.05),
+      inset -2px 0 2px rgba(0, 0, 0, 0.3),
+      0 4px 4px rgba(0, 0, 0, 0.6),
+      0 8px 12px rgba(0, 0, 0, 0.4);
+    transform-origin: top center;
+  }
+
+  :global(.piano-key.black::before) {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    height: 30%;
+    background: linear-gradient(180deg,
+      rgba(255, 255, 255, 0.08) 0%,
+      transparent 100%
+    );
+    border-radius: 0 0 2px 2px;
+    pointer-events: none;
+  }
+
+  :global(.piano-key.black:hover) {
+    background: linear-gradient(180deg,
+      #4a4a4a 0%,
+      #3a3a3a 5%,
+      #2a2a2a 50%,
+      #1a1a1a 95%,
+      #0a0a0a 100%
+    );
+  }
+
+  :global(.piano-key.black.active) {
+    background: linear-gradient(180deg,
+      #8b7420 0%,
+      #7a6518 5%,
+      #695510 50%,
+      #584808 95%,
+      #473a05 100%
+    );
+    transform: perspective(500px) rotateX(-1deg) translateY(2px);
+    box-shadow:
+      inset 0 -1px 0 #3d3000,
+      inset 2px 0 2px rgba(255, 215, 0, 0.1),
+      inset -2px 0 2px rgba(0, 0, 0, 0.3),
+      0 2px 2px rgba(0, 0, 0, 0.6),
+      0 0 15px rgba(212, 175, 55, 0.3);
+  }
+
+  /* Key Labels - Only show on C notes */
+  :global(.piano-key .key-label) {
+    position: absolute;
+    bottom: 6px;
+    left: 50%;
+    transform: translateX(-50%);
+    font-size: 0.5rem;
+    font-weight: 600;
+    color: rgba(0, 0, 0, 0.3);
+    pointer-events: none;
+    opacity: 1;
+    transition: opacity 0.2s ease;
+  }
+
+  :global(#piano-keyboard:hover .piano-key.white .key-label) {
+    opacity: 1;
+  }
+
+  :global(.piano-key.white.active .key-label) {
+    color: rgba(0, 0, 0, 0.5);
+    opacity: 1;
+  }
+
+  /* Glow effect on active keys */
+  :global(.piano-key.active::after) {
+    content: '';
+    position: absolute;
+    bottom: -5px;
+    left: 50%;
+    transform: translateX(-50%);
+    width: 100%;
+    height: 30px;
+    background: radial-gradient(ellipse at center top,
+      rgba(255, 215, 0, 0.6) 0%,
+      rgba(212, 175, 55, 0.3) 30%,
+      transparent 70%
+    );
+    pointer-events: none;
+    filter: blur(4px);
+  }
+
+  /* MIDI playback pulse */
+  :global(.piano-key.midi-active) {
+    animation: midiGlow 0.15s ease-out;
+  }
+
+  @keyframes midiGlow {
+    0% { filter: brightness(1); }
+    50% { filter: brightness(1.3); }
+    100% { filter: brightness(1); }
+  }
+
+  /* Footer */
+  .piano-footer {
+    padding: 0.5rem 1rem;
+    background: rgba(0, 0, 0, 0.3);
+    border-top: 1px solid rgba(255, 255, 255, 0.02);
+  }
+
+  .footer-hint {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 0.4rem;
+    font-size: 0.7rem;
+    color: rgba(255, 255, 255, 0.25);
+  }
+
+  .footer-hint kbd {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    min-width: 18px;
+    height: 18px;
+    padding: 0 4px;
+    background: rgba(255, 255, 255, 0.05);
+    border: 1px solid rgba(255, 255, 255, 0.1);
+    border-radius: 3px;
+    font-family: inherit;
+    font-size: 0.65rem;
+  }
+
+  .hint-divider {
+    margin: 0 0.5rem;
+    opacity: 0.3;
+  }
+
+  /* Toggle Button */
+  .piano-toggle-btn {
+    position: fixed;
+    bottom: 24px;
+    right: 24px;
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+    padding: 0.75rem 1.25rem;
+    background: linear-gradient(135deg, #1a1a1a 0%, #0d0d0d 100%);
+    border: 1px solid rgba(212, 175, 55, 0.4);
+    border-radius: 50px;
+    color: #d4af37;
+    cursor: pointer;
+    z-index: 99;
+    box-shadow:
+      0 4px 20px rgba(0, 0, 0, 0.5),
+      0 0 30px rgba(212, 175, 55, 0.15),
+      inset 0 1px 0 rgba(255, 255, 255, 0.05);
+    transition: all 0.3s cubic-bezier(0.34, 1.56, 0.64, 1);
+    font-family: inherit;
+  }
+
+  .piano-toggle-btn:hover {
+    transform: translateY(-3px) scale(1.02);
+    border-color: rgba(212, 175, 55, 0.6);
+    box-shadow:
+      0 8px 30px rgba(0, 0, 0, 0.6),
+      0 0 40px rgba(212, 175, 55, 0.25),
+      inset 0 1px 0 rgba(255, 255, 255, 0.1);
+  }
+
+  .piano-toggle-btn.active {
+    background: linear-gradient(135deg, #2a2518 0%, #1a1508 100%);
+    border-color: #d4af37;
+  }
+
+  .toggle-icon {
+    width: 24px;
+    height: 24px;
+    color: #d4af37;
+  }
+
+  .toggle-label {
+    font-size: 0.85rem;
+    font-weight: 600;
+    letter-spacing: 0.02em;
+  }
+
+  /* Responsive */
+  @media (max-width: 768px) {
+    #piano-keyboard {
+      height: 120px;
+    }
+
+    :global(.piano-key.white) {
+      width: 28px;
+      min-width: 28px;
+      height: 120px;
+    }
+
+    :global(.piano-key.black) {
+      width: 18px;
+      height: 75px;
+      margin-left: -9px;
+    }
+
+    .piano-header {
+      flex-wrap: wrap;
+      gap: 0.5rem;
+      padding: 0.5rem 0.75rem;
+    }
+
+    .piano-brand {
+      order: 1;
+      flex: 1;
+    }
+
+    .brand-subtitle {
+      display: none;
+    }
+
+    .piano-controls-right {
+      order: 2;
+    }
+
+    .piano-controls-center {
+      order: 3;
+      width: 100%;
+      justify-content: center;
+    }
+
+    .volume-value {
+      display: none;
+    }
+
+    .piano-toggle-btn {
+      padding: 0.625rem 1rem;
+      bottom: 16px;
+      right: 16px;
+    }
+
+    .toggle-label {
+      display: none;
+    }
+
+    .footer-hint {
+      font-size: 0.6rem;
+    }
+  }
+
+  /* Hidden utility */
+  .hidden {
+    display: none !important;
+  }
+</style>
+
+<script>
+  // Initialize piano when DOM is ready
+  document.addEventListener('DOMContentLoaded', function() {
+    var pianoContainer = document.getElementById('piano-container');
+    var pianoToggle = document.getElementById('piano-toggle');
+    var pianoMinimize = document.getElementById('piano-minimize');
+    var pianoKeyboard = document.getElementById('piano-keyboard');
+    var midiUpload = document.getElementById('midi-upload');
+    var midiPlay = document.getElementById('midi-play');
+    var midiStop = document.getElementById('midi-stop');
+    var midiName = document.getElementById('midi-name');
+    var volumeSlider = document.getElementById('piano-volume');
+    var volumeValue = document.querySelector('.volume-value');
+
+    if (!pianoKeyboard) {
+      console.error('Piano keyboard element not found');
+      return;
+    }
+
+    var audioContext = null;
+    var synth = null;
+    var midiData = null;
+    var isPlaying = false;
+    var playbackTimeouts = [];
+    var volume = 0.7;
+
+    var NOTE_NAMES = ['C', 'C#', 'D', 'D#', 'E', 'F', 'F#', 'G', 'G#', 'A', 'A#', 'B'];
+    // Full 88-key piano: A0 to C8 (MIDI notes 21-108)
+    // We'll do 7 full octaves (C1 to B7) plus high C8 = 85 keys
+    var START_OCTAVE = 1;
+    var NUM_OCTAVES = 7;
+    var WHITE_KEY_WIDTH = 36; // Slightly narrower to fit more keys
+
+    var KEY_MAP = {
+      'a': 0, 'w': 1, 's': 2, 'e': 3, 'd': 4, 'f': 5, 't': 6, 'g': 7,
+      'y': 8, 'h': 9, 'u': 10, 'j': 11, 'k': 12, 'o': 13, 'l': 14, 'p': 15
+    };
+
+    function createKeyboard() {
+      pianoKeyboard.innerHTML = '';
+      var whiteKeys = [];
+      var blackKeys = [];
+
+      // First pass: create all keys and sort them
+      for (var octave = START_OCTAVE; octave < START_OCTAVE + NUM_OCTAVES; octave++) {
+        for (var noteIndex = 0; noteIndex < 12; noteIndex++) {
+          var noteName = NOTE_NAMES[noteIndex];
+          var isBlack = noteName.includes('#');
+          var midiNote = (octave + 1) * 12 + noteIndex;
+
+          var key = document.createElement('div');
+          key.className = 'piano-key ' + (isBlack ? 'black' : 'white');
+          key.setAttribute('data-note', midiNote.toString());
+          key.setAttribute('data-note-name', noteName + octave);
+
+          if (!isBlack) {
+            // Only show labels on C notes for clarity
+            if (noteName === 'C') {
+              var label = document.createElement('span');
+              label.className = 'key-label';
+              label.textContent = 'C' + octave;
+              key.appendChild(label);
+            }
+            whiteKeys.push({ key: key, midiNote: midiNote });
+          } else {
+            blackKeys.push({ key: key, midiNote: midiNote, afterWhiteIndex: whiteKeys.length - 1 });
+          }
+
+          // Use IIFE to capture midiNote for event handlers
+          (function(key, midiNote) {
+            // Mouse events
+            key.addEventListener('mousedown', function(e) {
+              e.preventDefault();
+              playNote(midiNote);
+              key.classList.add('active');
+            });
+
+            key.addEventListener('mouseup', function() {
+              stopNote(midiNote);
+              key.classList.remove('active');
+            });
+
+            key.addEventListener('mouseleave', function() {
+              stopNote(midiNote);
+              key.classList.remove('active');
+            });
+
+            // Touch events
+            key.addEventListener('touchstart', function(e) {
+              e.preventDefault();
+              playNote(midiNote);
+              key.classList.add('active');
+            }, { passive: false });
+
+            key.addEventListener('touchend', function() {
+              stopNote(midiNote);
+              key.classList.remove('active');
+            });
+          })(key, midiNote);
+        }
+      }
+
+      // Add white keys first
+      whiteKeys.forEach(function(item) {
+        pianoKeyboard.appendChild(item.key);
+      });
+
+      // Position and add black keys
+      blackKeys.forEach(function(item) {
+        var leftPos = (item.afterWhiteIndex + 1) * WHITE_KEY_WIDTH;
+        item.key.style.left = leftPos + 'px';
+        pianoKeyboard.appendChild(item.key);
+      });
+
+      console.log('Piano created:', whiteKeys.length, 'white keys,', blackKeys.length, 'black keys');
+    }
+
+    var reverbNode = null;
+    var compressor = null;
+
+    function initAudio() {
+      if (audioContext) return;
+      var AudioContextClass = window.AudioContext || window.webkitAudioContext;
+      audioContext = new AudioContextClass();
+
+      // Create compressor for better dynamics
+      compressor = audioContext.createDynamicsCompressor();
+      compressor.threshold.setValueAtTime(-24, audioContext.currentTime);
+      compressor.knee.setValueAtTime(30, audioContext.currentTime);
+      compressor.ratio.setValueAtTime(12, audioContext.currentTime);
+      compressor.attack.setValueAtTime(0.003, audioContext.currentTime);
+      compressor.release.setValueAtTime(0.25, audioContext.currentTime);
+      compressor.connect(audioContext.destination);
+
+      // Create reverb using convolver
+      reverbNode = audioContext.createConvolver();
+      var reverbTime = 2;
+      var sampleRate = audioContext.sampleRate;
+      var length = sampleRate * reverbTime;
+      var impulse = audioContext.createBuffer(2, length, sampleRate);
+      for (var channel = 0; channel < 2; channel++) {
+        var channelData = impulse.getChannelData(channel);
+        for (var i = 0; i < length; i++) {
+          channelData[i] = (Math.random() * 2 - 1) * Math.pow(1 - i / length, 2.5);
+        }
+      }
+      reverbNode.buffer = impulse;
+
+      // Reverb mix
+      var reverbGain = audioContext.createGain();
+      reverbGain.gain.setValueAtTime(0.15, audioContext.currentTime);
+      reverbNode.connect(reverbGain);
+      reverbGain.connect(compressor);
+
+      synth = {
+        activeNotes: new Map(),
+        reverbGain: reverbGain,
+        play: function(midiNote) {
+          if (!audioContext) return;
+          var frequency = 440 * Math.pow(2, (midiNote - 69) / 12);
+          var t = audioContext.currentTime;
+
+          // Piano-like sound with multiple harmonics
+          var oscillators = [];
+          var gains = [];
+          var masterGain = audioContext.createGain();
+
+          // Harmonics configuration (frequency multiplier, amplitude, type)
+          var harmonics = [
+            { mult: 1, amp: 1.0, type: 'sine' },      // Fundamental
+            { mult: 2, amp: 0.5, type: 'sine' },      // 2nd harmonic
+            { mult: 3, amp: 0.25, type: 'sine' },     // 3rd harmonic
+            { mult: 4, amp: 0.125, type: 'sine' },    // 4th harmonic
+            { mult: 5, amp: 0.0625, type: 'sine' },   // 5th harmonic
+            { mult: 6, amp: 0.03, type: 'sine' },     // 6th harmonic
+          ];
+
+          // Brightness decreases with higher notes (like real piano)
+          var brightnessRatio = Math.max(0.3, 1 - (midiNote - 40) / 80);
+
+          harmonics.forEach(function(h, index) {
+            var osc = audioContext.createOscillator();
+            var oscGain = audioContext.createGain();
+
+            osc.type = h.type;
+            osc.frequency.setValueAtTime(frequency * h.mult, t);
+
+            // Slight detuning for richness
+            if (index > 0) {
+              osc.detune.setValueAtTime((Math.random() - 0.5) * 4, t);
+            }
+
+            // Higher harmonics decay faster
+            var harmAmp = h.amp * brightnessRatio * Math.pow(0.85, index);
+            oscGain.gain.setValueAtTime(0, t);
+            oscGain.gain.linearRampToValueAtTime(harmAmp * volume * 0.3, t + 0.002);
+            oscGain.gain.exponentialRampToValueAtTime(harmAmp * volume * 0.15, t + 0.1);
+            oscGain.gain.exponentialRampToValueAtTime(harmAmp * volume * 0.05, t + 0.5);
+            oscGain.gain.exponentialRampToValueAtTime(0.0001, t + 3);
+
+            osc.connect(oscGain);
+            oscGain.connect(masterGain);
+            osc.start(t);
+            osc.stop(t + 4);
+
+            oscillators.push(osc);
+            gains.push(oscGain);
+          });
+
+          // Low-pass filter - darker for lower notes
+          var filter = audioContext.createBiquadFilter();
+          filter.type = 'lowpass';
+          var cutoff = Math.min(8000, 800 + frequency * 4) * brightnessRatio;
+          filter.frequency.setValueAtTime(cutoff * 2, t);
+          filter.frequency.exponentialRampToValueAtTime(cutoff * 0.5, t + 0.5);
+          filter.Q.setValueAtTime(1, t);
+
+          // High-pass to remove mud
+          var highpass = audioContext.createBiquadFilter();
+          highpass.type = 'highpass';
+          highpass.frequency.setValueAtTime(Math.max(20, frequency * 0.5), t);
+
+          // Master envelope
+          masterGain.gain.setValueAtTime(1, t);
+
+          // Connect: oscillators -> masterGain -> filter -> highpass -> output
+          masterGain.connect(filter);
+          filter.connect(highpass);
+          highpass.connect(compressor);
+          highpass.connect(reverbNode); // Send to reverb
+
+          this.activeNotes.set(midiNote, {
+            oscillators: oscillators,
+            gains: gains,
+            masterGain: masterGain,
+            filter: filter
+          });
+        },
+        stop: function(midiNote) {
+          if (!audioContext) return;
+          var note = this.activeNotes.get(midiNote);
+          if (note) {
+            var t = audioContext.currentTime;
+            // Quick release
+            note.gains.forEach(function(g) {
+              g.gain.cancelScheduledValues(t);
+              g.gain.setValueAtTime(g.gain.value, t);
+              g.gain.exponentialRampToValueAtTime(0.0001, t + 0.15);
+            });
+            setTimeout(function() {
+              note.oscillators.forEach(function(osc) {
+                try { osc.stop(); } catch(e) {}
+              });
+            }, 200);
+            this.activeNotes.delete(midiNote);
+          }
+        }
+      };
+    }
+
+    // Visualizer bars
+    var vizBars = document.querySelectorAll('.viz-bar');
+
+    function triggerVisualizer() {
+      // Randomly activate some bars
+      var numBars = 2 + Math.floor(Math.random() * 4);
+      for (var i = 0; i < numBars; i++) {
+        var randomBar = vizBars[Math.floor(Math.random() * vizBars.length)];
+        randomBar.classList.add('active');
+        setTimeout(function(bar) {
+          return function() { bar.classList.remove('active'); };
+        }(randomBar), 150);
+      }
+    }
+
+    function playNote(midiNote) {
+      initAudio();
+      if (synth) synth.play(midiNote);
+      triggerVisualizer();
+    }
+
+    function stopNote(midiNote) {
+      if (synth) synth.stop(midiNote);
+    }
+
+    function highlightKey(midiNote, active) {
+      var key = pianoKeyboard.querySelector('[data-note="' + midiNote + '"]');
+      if (key) {
+        if (active) {
+          key.classList.add('active', 'midi-active');
+        } else {
+          key.classList.remove('active', 'midi-active');
+        }
+      }
+    }
+
+    if (midiUpload) {
+      midiUpload.addEventListener('change', function(e) {
+        var file = e.target.files && e.target.files[0];
+        if (!file) return;
+
+        file.arrayBuffer().then(function(arrayBuffer) {
+          return import('@tonejs/midi').then(function(module) {
+            var Midi = module.Midi;
+            midiData = new Midi(arrayBuffer);
+            if (midiName) midiName.textContent = file.name;
+            if (midiPlay) midiPlay.classList.remove('hidden');
+            if (midiStop) midiStop.classList.add('hidden');
+            // Auto-play the MIDI file
+            startMidiPlayback();
+          });
+        }).catch(function(err) {
+          console.error('Error loading MIDI:', err);
+          if (midiName) midiName.textContent = 'Error loading file';
+        });
+      });
+    }
+
+    function startMidiPlayback() {
+      if (!midiData || isPlaying) return;
+      initAudio();
+      isPlaying = true;
+      if (midiPlay) midiPlay.classList.add('hidden');
+      if (midiStop) midiStop.classList.remove('hidden');
+
+      midiData.tracks.forEach(function(track) {
+        track.notes.forEach(function(note) {
+          var noteOnTime = note.time * 1000;
+          var noteOffTime = (note.time + note.duration) * 1000;
+
+          var onTimeout = window.setTimeout(function() {
+            playNote(note.midi);
+            highlightKey(note.midi, true);
+          }, noteOnTime);
+
+          var offTimeout = window.setTimeout(function() {
+            stopNote(note.midi);
+            highlightKey(note.midi, false);
+          }, noteOffTime);
+
+          playbackTimeouts.push(onTimeout, offTimeout);
+        });
+      });
+
+      var duration = midiData.duration * 1000;
+      var endTimeout = window.setTimeout(stopPlayback, duration + 500);
+      playbackTimeouts.push(endTimeout);
+    }
+
+    if (midiPlay) {
+      midiPlay.addEventListener('click', startMidiPlayback);
+    }
+
+    if (midiStop) {
+      midiStop.addEventListener('click', stopPlayback);
+    }
+
+    function stopPlayback() {
+      isPlaying = false;
+      playbackTimeouts.forEach(function(t) { clearTimeout(t); });
+      playbackTimeouts = [];
+
+      document.querySelectorAll('.piano-key.active').forEach(function(key) {
+        var midiNote = parseInt(key.dataset.note || '0');
+        stopNote(midiNote);
+        key.classList.remove('active', 'midi-active');
+      });
+
+      if (midiPlay) midiPlay.classList.remove('hidden');
+      if (midiStop) midiStop.classList.add('hidden');
+    }
+
+    if (volumeSlider) {
+      volumeSlider.addEventListener('input', function(e) {
+        volume = parseInt(e.target.value) / 100;
+        if (volumeValue) volumeValue.textContent = Math.round(volume * 100) + '%';
+      });
+    }
+
+    // Check localStorage for saved preference (default is visible)
+    var savedPref = localStorage.getItem('piano-visible');
+    if (savedPref === 'false') {
+      if (pianoContainer) pianoContainer.classList.remove('visible');
+      if (pianoToggle) pianoToggle.classList.remove('active');
+    }
+
+    if (pianoToggle) {
+      pianoToggle.addEventListener('click', function() {
+        initAudio();
+        if (pianoContainer) pianoContainer.classList.toggle('visible');
+        pianoToggle.classList.toggle('active');
+        // Save preference
+        var isVisible = pianoContainer && pianoContainer.classList.contains('visible');
+        localStorage.setItem('piano-visible', isVisible ? 'true' : 'false');
+      });
+    }
+
+    if (pianoMinimize) {
+      pianoMinimize.addEventListener('click', function() {
+        if (pianoContainer) pianoContainer.classList.remove('visible');
+        if (pianoToggle) pianoToggle.classList.remove('active');
+        localStorage.setItem('piano-visible', 'false');
+        stopPlayback();
+      });
+    }
+
+    var activeKeys = new Set();
+
+    document.addEventListener('keydown', function(e) {
+      if (!pianoContainer || !pianoContainer.classList.contains('visible')) return;
+      if (e.target instanceof HTMLInputElement) return;
+      if (e.repeat || activeKeys.has(e.key.toLowerCase())) return;
+
+      var keyOffset = KEY_MAP[e.key.toLowerCase()];
+      if (keyOffset !== undefined) {
+        activeKeys.add(e.key.toLowerCase());
+        var midiNote = (START_OCTAVE + 2) * 12 + keyOffset;
+        playNote(midiNote);
+        highlightKey(midiNote, true);
+      }
+    });
+
+    document.addEventListener('keyup', function(e) {
+      var keyOffset = KEY_MAP[e.key.toLowerCase()];
+      if (keyOffset !== undefined) {
+        activeKeys.delete(e.key.toLowerCase());
+        var midiNote = (START_OCTAVE + 2) * 12 + keyOffset;
+        stopNote(midiNote);
+        highlightKey(midiNote, false);
+      }
+    });
+
+    // Create the keyboard
+    createKeyboard();
+  });
+</script>

@@ -2,46 +2,211 @@
 import Layout from '../layouts/Layout.astro';
 ---
 
-<Layout title="About | Pontus Hultgren">
-  <section class="max-w-4xl mx-auto px-6 py-12">
-    <h1 class="text-4xl font-heading font-bold mb-8 text-center gold-glow">About</h1>
-    
-    <div class="card p-8 mb-12">
-      <div class="flex flex-col md:flex-row gap-8 items-center">
-        <img src="/profile.png" alt="Pontus Hultgren" class="w-48 h-48 rounded-full flex-shrink-0 border-4 border-accent-gold/30 shadow-xl" />
+<Layout title="About | Pontus Hultgren" description="Learn about Pontus Hultgren, Swedish video game music orchestrator bringing beloved game soundtracks to life with full orchestral arrangements.">
+  <section class="max-w-5xl mx-auto px-6 py-12">
+    <h1 class="text-4xl md:text-5xl font-heading font-bold mb-4 text-center gold-glow">About Pontus</h1>
+    <p class="text-text-secondary text-center mb-16 max-w-2xl mx-auto text-lg">Bringing video game music to life through orchestral arrangements</p>
+
+    <!-- Hero Bio Section -->
+    <div class="card p-8 md:p-12 mb-16 relative overflow-hidden">
+      <div class="absolute top-0 right-0 w-64 h-64 bg-accent-gold/5 rounded-full blur-3xl"></div>
+      <div class="flex flex-col lg:flex-row gap-8 lg:gap-12 items-center relative">
+        <div class="flex-shrink-0">
+          <img
+            src="/profile.jpg"
+            alt="Pontus Hultgren"
+            class="w-56 h-56 lg:w-64 lg:h-64 rounded-2xl object-cover border-4 border-accent-gold/20 shadow-2xl hover:border-accent-gold/40 transition-all duration-300"
+          />
+        </div>
         <div>
-          <h2 class="text-2xl font-heading font-bold mb-4">Pontus Hultgren</h2>
-          <p class="text-text-secondary mb-4">A Swedish orchestrator and composer working from his home studio in Linköping, Sweden. Specializing in video game music arrangements, Pontus brings beloved game soundtracks to life with full orchestral treatment.</p>
-          <p class="text-text-secondary">With a passion for both classic and modern video games, his work spans from 8-bit era classics like Mega Man to epic RPG scores from Final Fantasy and Dark Souls.</p>
+          <h2 class="text-3xl font-heading font-bold mb-4 text-accent-gold">Pontus Hultgren</h2>
+          <p class="text-text-secondary mb-4 leading-relaxed">
+            From his home studio in <span class="text-text-primary">Linköping, Sweden</span>, Pontus has spent over a decade transforming the music that defined our gaming childhoods into powerful orchestral experiences.
+          </p>
+          <p class="text-text-secondary mb-4 leading-relaxed">
+            What started as a passion project on YouTube has grown into a global community of <span class="text-accent-gold font-semibold">31,000+ subscribers</span> and <span class="text-accent-gold font-semibold">34,000+ monthly Spotify listeners</span>, all united by a love for video game music.
+          </p>
+          <p class="text-text-secondary leading-relaxed">
+            Each arrangement is crafted with meticulous attention to the original composition while adding rich orchestral textures—from the triumphant brass of Final Fantasy battle themes to the haunting strings of Dark Souls.
+          </p>
         </div>
       </div>
     </div>
 
-    <h2 class="text-2xl font-heading font-bold mb-6 text-center">Musical Influences</h2>
-    <div class="grid sm:grid-cols-2 lg:grid-cols-4 gap-4 mb-12">
-      <div class="card p-4 text-center"><h3 class="font-semibold text-accent-gold">Nobuo Uematsu</h3><p class="text-text-secondary text-sm">Final Fantasy</p></div>
-      <div class="card p-4 text-center"><h3 class="font-semibold text-accent-gold">Yasunori Mitsuda</h3><p class="text-text-secondary text-sm">Chrono Trigger</p></div>
-      <div class="card p-4 text-center"><h3 class="font-semibold text-accent-gold">John Williams</h3><p class="text-text-secondary text-sm">Film Scores</p></div>
-      <div class="card p-4 text-center"><h3 class="font-semibold text-accent-gold">Ennio Morricone</h3><p class="text-text-secondary text-sm">Film Scores</p></div>
-    </div>
-
-    <div class="bg-bg-secondary rounded-2xl p-8 mb-12">
-      <h2 class="text-2xl font-heading font-bold mb-6 text-center">By the Numbers</h2>
-      <div class="grid grid-cols-2 md:grid-cols-4 gap-6 text-center">
-        <div><div class="text-3xl font-bold text-accent-gold font-mono">14+</div><div class="text-text-secondary text-sm">Albums</div></div>
-        <div><div class="text-3xl font-bold text-accent-gold font-mono">18M+</div><div class="text-text-secondary text-sm">Views</div></div>
-        <div><div class="text-3xl font-bold text-accent-gold font-mono">34K+</div><div class="text-text-secondary text-sm">Spotify Listeners</div></div>
-        <div><div class="text-3xl font-bold text-accent-gold font-mono">2011</div><div class="text-text-secondary text-sm">Started</div></div>
+    <!-- The Journey Timeline -->
+    <div class="mb-16">
+      <h2 class="text-2xl font-heading font-bold mb-8 text-center">The Journey</h2>
+      <div class="relative">
+        <div class="absolute left-1/2 transform -translate-x-1/2 h-full w-px bg-gradient-to-b from-accent-gold/50 via-accent-gold/20 to-transparent hidden md:block"></div>
+        <div class="space-y-8">
+          <div class="timeline-item flex flex-col md:flex-row items-center gap-4">
+            <div class="md:w-1/2 md:text-right md:pr-8">
+              <div class="text-accent-gold font-mono font-bold text-xl">2011</div>
+              <h3 class="font-semibold text-lg">First Upload</h3>
+              <p class="text-text-secondary text-sm">Began sharing orchestral arrangements on YouTube, starting with classic SNES era soundtracks.</p>
+            </div>
+            <div class="hidden md:block w-4 h-4 bg-accent-gold rounded-full ring-4 ring-bg-secondary z-10"></div>
+            <div class="md:w-1/2"></div>
+          </div>
+          <div class="timeline-item flex flex-col md:flex-row items-center gap-4">
+            <div class="md:w-1/2"></div>
+            <div class="hidden md:block w-4 h-4 bg-accent-gold rounded-full ring-4 ring-bg-secondary z-10"></div>
+            <div class="md:w-1/2 md:pl-8">
+              <div class="text-accent-gold font-mono font-bold text-xl">2016</div>
+              <h3 class="font-semibold text-lg">The Final Fantasy VI Symphony</h3>
+              <p class="text-text-secondary text-sm">Released the first full-length album—a complete symphonic treatment of one of gaming's greatest soundtracks.</p>
+            </div>
+          </div>
+          <div class="timeline-item flex flex-col md:flex-row items-center gap-4">
+            <div class="md:w-1/2 md:text-right md:pr-8">
+              <div class="text-accent-gold font-mono font-bold text-xl">2020</div>
+              <h3 class="font-semibold text-lg">BLOODLINES</h3>
+              <p class="text-text-secondary text-sm">Castlevania: Symphony of the Night gets the full orchestral treatment, becoming a fan favorite album.</p>
+            </div>
+            <div class="hidden md:block w-4 h-4 bg-accent-gold rounded-full ring-4 ring-bg-secondary z-10"></div>
+            <div class="md:w-1/2"></div>
+          </div>
+          <div class="timeline-item flex flex-col md:flex-row items-center gap-4">
+            <div class="md:w-1/2"></div>
+            <div class="hidden md:block w-4 h-4 bg-accent-gold rounded-full ring-4 ring-bg-secondary z-10"></div>
+            <div class="md:w-1/2 md:pl-8">
+              <div class="text-accent-gold font-mono font-bold text-xl">2024</div>
+              <h3 class="font-semibold text-lg">18 Million Views</h3>
+              <p class="text-text-secondary text-sm">The channel reaches 18 million total views, with a dedicated Patreon community supporting new arrangements monthly.</p>
+            </div>
+          </div>
+        </div>
       </div>
     </div>
 
-    <h2 class="text-2xl font-heading font-bold mb-6 text-center">Connect</h2>
-    <div class="flex flex-wrap justify-center gap-3">
-      <a href="https://youtube.com/@PontusHultgren" target="_blank" class="btn-secondary">YouTube</a>
-      <a href="https://open.spotify.com/artist/2hQXaxC4wndS2XXILcF3db" target="_blank" class="btn-secondary">Spotify</a>
-      <a href="https://music.apple.com/us/artist/pontus-hultgren/991467382" target="_blank" class="btn-secondary">Apple Music</a>
-      <a href="https://patreon.com/pontuscomposer" target="_blank" class="btn-primary">Patreon</a>
-      <a href="https://twitter.com/PontusComposer" target="_blank" class="btn-secondary">Twitter</a>
+    <!-- Stats Section -->
+    <div class="bg-gradient-to-br from-bg-secondary to-bg-tertiary rounded-2xl p-8 md:p-12 mb-16 border border-white/5">
+      <h2 class="text-2xl font-heading font-bold mb-8 text-center">By the Numbers</h2>
+      <div class="grid grid-cols-2 md:grid-cols-4 gap-6 md:gap-8 text-center">
+        <div class="stat-item">
+          <div class="text-4xl md:text-5xl font-bold text-accent-gold font-mono">14+</div>
+          <div class="text-text-secondary text-sm mt-2">Studio Albums</div>
+        </div>
+        <div class="stat-item">
+          <div class="text-4xl md:text-5xl font-bold text-accent-gold font-mono">18M+</div>
+          <div class="text-text-secondary text-sm mt-2">YouTube Views</div>
+        </div>
+        <div class="stat-item">
+          <div class="text-4xl md:text-5xl font-bold text-accent-gold font-mono">34K+</div>
+          <div class="text-text-secondary text-sm mt-2">Spotify Listeners</div>
+        </div>
+        <div class="stat-item">
+          <div class="text-4xl md:text-5xl font-bold text-accent-gold font-mono">238</div>
+          <div class="text-text-secondary text-sm mt-2">Patrons</div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Musical Influences -->
+    <div class="mb-16">
+      <h2 class="text-2xl font-heading font-bold mb-8 text-center">Musical Influences</h2>
+      <div class="grid sm:grid-cols-2 lg:grid-cols-4 gap-4">
+        <div class="card p-6 text-center hover:scale-105 transition-transform">
+          <h3 class="font-semibold text-accent-gold text-lg">Nobuo Uematsu</h3>
+          <p class="text-text-secondary text-sm mt-1">Final Fantasy Series</p>
+        </div>
+        <div class="card p-6 text-center hover:scale-105 transition-transform">
+          <h3 class="font-semibold text-accent-gold text-lg">Yasunori Mitsuda</h3>
+          <p class="text-text-secondary text-sm mt-1">Chrono Trigger</p>
+        </div>
+        <div class="card p-6 text-center hover:scale-105 transition-transform">
+          <h3 class="font-semibold text-accent-gold text-lg">John Williams</h3>
+          <p class="text-text-secondary text-sm mt-1">Film Scores</p>
+        </div>
+        <div class="card p-6 text-center hover:scale-105 transition-transform">
+          <h3 class="font-semibold text-accent-gold text-lg">Michiru Yamane</h3>
+          <p class="text-text-secondary text-sm mt-1">Castlevania</p>
+        </div>
+      </div>
+    </div>
+
+    <!-- Featured Games Section -->
+    <div class="mb-16">
+      <h2 class="text-2xl font-heading font-bold mb-8 text-center">Games Covered</h2>
+      <div class="flex flex-wrap justify-center gap-3">
+        <span class="px-4 py-2 bg-bg-secondary rounded-full text-text-secondary border border-white/10 hover:border-accent-gold/30 transition-colors">Final Fantasy VI</span>
+        <span class="px-4 py-2 bg-bg-secondary rounded-full text-text-secondary border border-white/10 hover:border-accent-gold/30 transition-colors">Final Fantasy VII</span>
+        <span class="px-4 py-2 bg-bg-secondary rounded-full text-text-secondary border border-white/10 hover:border-accent-gold/30 transition-colors">Chrono Trigger</span>
+        <span class="px-4 py-2 bg-bg-secondary rounded-full text-text-secondary border border-white/10 hover:border-accent-gold/30 transition-colors">Dark Souls</span>
+        <span class="px-4 py-2 bg-bg-secondary rounded-full text-text-secondary border border-white/10 hover:border-accent-gold/30 transition-colors">Castlevania</span>
+        <span class="px-4 py-2 bg-bg-secondary rounded-full text-text-secondary border border-white/10 hover:border-accent-gold/30 transition-colors">Resident Evil</span>
+        <span class="px-4 py-2 bg-bg-secondary rounded-full text-text-secondary border border-white/10 hover:border-accent-gold/30 transition-colors">Final Fantasy X</span>
+        <span class="px-4 py-2 bg-bg-secondary rounded-full text-text-secondary border border-white/10 hover:border-accent-gold/30 transition-colors">Sea of Stars</span>
+        <span class="px-4 py-2 bg-bg-secondary rounded-full text-text-secondary border border-white/10 hover:border-accent-gold/30 transition-colors">Mega Man</span>
+        <span class="px-4 py-2 bg-bg-secondary rounded-full text-text-secondary border border-white/10 hover:border-accent-gold/30 transition-colors">Kingdom Hearts</span>
+        <span class="px-4 py-2 bg-bg-secondary rounded-full text-text-secondary border border-white/10 hover:border-accent-gold/30 transition-colors">Zelda</span>
+        <span class="px-4 py-2 bg-bg-secondary rounded-full text-text-secondary border border-white/10 hover:border-accent-gold/30 transition-colors">Elden Ring</span>
+      </div>
+    </div>
+
+    <!-- Contact Section -->
+    <div class="card p-8 md:p-12 text-center mb-16 relative overflow-hidden">
+      <div class="absolute bottom-0 left-0 w-48 h-48 bg-accent-gold/5 rounded-full blur-3xl"></div>
+      <h2 class="text-2xl font-heading font-bold mb-4 relative">Get in Touch</h2>
+      <p class="text-text-secondary mb-6 max-w-xl mx-auto relative">For business inquiries, collaboration opportunities, or licensing requests.</p>
+      <a
+        href="mailto:pontus.composer@outlook.com"
+        class="btn-primary text-lg px-8 inline-flex items-center gap-2"
+        aria-label="Send email to Pontus"
+      >
+        <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 8l7.89 5.26a2 2 0 002.22 0L21 8M5 19h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v10a2 2 0 002 2z"/></svg>
+        Contact Pontus
+      </a>
+    </div>
+
+    <!-- Connect Section -->
+    <div class="text-center">
+      <h2 class="text-2xl font-heading font-bold mb-6">Connect</h2>
+      <div class="flex flex-wrap justify-center gap-3">
+        <a href="https://youtube.com/@PontusHultgren" target="_blank" rel="noopener" class="btn-secondary inline-flex items-center gap-2" aria-label="YouTube">
+          <svg class="w-5 h-5" fill="currentColor" viewBox="0 0 24 24"><path d="M23.498 6.186a3.016 3.016 0 0 0-2.122-2.136C19.505 3.545 12 3.545 12 3.545s-7.505 0-9.377.505A3.017 3.017 0 0 0 .502 6.186C0 8.07 0 12 0 12s0 3.93.502 5.814a3.016 3.016 0 0 0 2.122 2.136c1.871.505 9.376.505 9.376.505s7.505 0 9.377-.505a3.015 3.015 0 0 0 2.122-2.136C24 15.93 24 12 24 12s0-3.93-.502-5.814zM9.545 15.568V8.432L15.818 12l-6.273 3.568z"/></svg>
+          YouTube
+        </a>
+        <a href="https://open.spotify.com/artist/2hQXaxC4wndS2XXILcF3db" target="_blank" rel="noopener" class="btn-secondary inline-flex items-center gap-2" aria-label="Spotify">
+          <svg class="w-5 h-5" fill="currentColor" viewBox="0 0 24 24"><path d="M12 0C5.4 0 0 5.4 0 12s5.4 12 12 12 12-5.4 12-12S18.66 0 12 0zm5.521 17.34c-.24.359-.66.48-1.021.24-2.82-1.74-6.36-2.101-10.561-1.141-.418.122-.779-.179-.899-.539-.12-.421.18-.78.54-.9 4.56-1.021 8.52-.6 11.64 1.32.42.18.479.659.301 1.02zm1.44-3.3c-.301.42-.841.6-1.262.3-3.239-1.98-8.159-2.58-11.939-1.38-.479.12-1.02-.12-1.14-.6-.12-.48.12-1.021.6-1.141C9.6 9.9 15 10.561 18.72 12.84c.361.181.54.78.241 1.2zm.12-3.36C15.24 8.4 8.82 8.16 5.16 9.301c-.6.179-1.2-.181-1.38-.721-.18-.601.18-1.2.72-1.381 4.26-1.26 11.28-1.02 15.721 1.621.539.3.719 1.02.419 1.56-.299.421-1.02.599-1.559.3z"/></svg>
+          Spotify
+        </a>
+        <a href="https://music.apple.com/us/artist/pontus-hultgren/991467382" target="_blank" rel="noopener" class="btn-secondary inline-flex items-center gap-2" aria-label="Apple Music">
+          <svg class="w-5 h-5" fill="currentColor" viewBox="0 0 24 24"><path d="M23.994 6.124a9.23 9.23 0 00-.24-2.19c-.317-1.31-1.062-2.31-2.18-3.043a5.022 5.022 0 00-1.877-.726 10.496 10.496 0 00-1.564-.15c-.04-.003-.083-.01-.124-.013H5.986c-.152.01-.303.017-.455.026-.747.043-1.49.123-2.193.401-1.336.53-2.3 1.452-2.865 2.78-.192.448-.292.925-.363 1.408-.056.392-.088.785-.1 1.18 0 .032-.007.062-.01.093v12.223c.01.14.017.283.027.424.05.815.154 1.624.497 2.373.65 1.42 1.738 2.353 3.234 2.8.42.127.856.187 1.293.228.555.053 1.11.06 1.667.06h11.03a12.5 12.5 0 001.57-.1c.822-.105 1.597-.35 2.296-.81a5.046 5.046 0 001.88-2.207c.186-.42.293-.87.37-1.324.113-.675.138-1.358.137-2.04-.002-3.8 0-7.595-.003-11.393zm-6.423 3.99v5.712c0 .417-.058.827-.244 1.206-.29.59-.76.962-1.388 1.14-.35.1-.706.157-1.07.173-.95.042-1.8-.6-1.965-1.52-.18-1.01.244-1.955 1.223-2.32.478-.177.98-.26 1.49-.295.482-.03.964-.1 1.436-.182.202-.036.34-.193.34-.407 0-1.543 0-3.086.002-4.628 0-.055-.003-.11-.01-.163-.03-.186-.16-.327-.344-.307-.408.044-.814.12-1.22.192-1.234.22-2.47.437-3.702.664-.09.016-.118.062-.118.153.003 2.337 0 4.674.004 7.012 0 .372-.043.74-.176 1.09-.248.648-.698 1.09-1.352 1.323-.374.133-.763.19-1.158.21-.906.046-1.703-.52-1.95-1.36-.255-.873.09-1.805.87-2.24.4-.223.837-.338 1.29-.384.465-.05.93-.112 1.395-.18.217-.032.38-.18.396-.4.006-.075.01-.15.01-.225V7.39c0-.208.057-.386.208-.537.13-.13.293-.2.478-.235.6-.11 1.2-.22 1.8-.328 1.348-.245 2.696-.49 4.044-.732.274-.05.548-.094.823-.137.205-.034.39.032.527.19.105.12.168.27.168.44v4.05z"/></svg>
+          Apple Music
+        </a>
+        <a href="https://patreon.com/pontuscomposer" target="_blank" rel="noopener" class="btn-primary inline-flex items-center gap-2" aria-label="Support on Patreon">
+          <svg class="w-5 h-5" fill="currentColor" viewBox="0 0 24 24"><path d="M15.386.524c-4.764 0-8.64 3.876-8.64 8.64 0 4.75 3.876 8.613 8.64 8.613 4.75 0 8.614-3.864 8.614-8.613C24 4.4 20.136.524 15.386.524M.003 23.537h4.22V.524H.003"/></svg>
+          Support on Patreon
+        </a>
+        <a href="https://twitter.com/PontusComposer" target="_blank" rel="noopener" class="btn-secondary inline-flex items-center gap-2" aria-label="Twitter/X">
+          <svg class="w-5 h-5" fill="currentColor" viewBox="0 0 24 24"><path d="M18.244 2.25h3.308l-7.227 8.26 8.502 11.24H16.17l-5.214-6.817L4.99 21.75H1.68l7.73-8.835L1.254 2.25H8.08l4.713 6.231zm-1.161 17.52h1.833L7.084 4.126H5.117z"/></svg>
+          Twitter
+        </a>
+      </div>
     </div>
   </section>
 </Layout>
+
+<style>
+  .timeline-item {
+    opacity: 0;
+    animation: fadeInUp 0.6s ease forwards;
+  }
+
+  .timeline-item:nth-child(1) { animation-delay: 0.1s; }
+  .timeline-item:nth-child(2) { animation-delay: 0.2s; }
+  .timeline-item:nth-child(3) { animation-delay: 0.3s; }
+  .timeline-item:nth-child(4) { animation-delay: 0.4s; }
+
+  @keyframes fadeInUp {
+    from {
+      opacity: 0;
+      transform: translateY(20px);
+    }
+    to {
+      opacity: 1;
+      transform: translateY(0);
+    }
+  }
+</style>

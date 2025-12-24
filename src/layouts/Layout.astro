@@ -1,5 +1,7 @@
 ---
 import '../styles/global.css';
+import Piano from '../components/Piano.astro';
+import MusicParticles from '../components/MusicParticles.astro';
 
 interface Props {
   title: string;
@@ -8,6 +10,30 @@ interface Props {
 
 const { title, description = 'Swedish video game music orchestrator. Listen to orchestral arrangements of your favorite game soundtracks.' } = Astro.props;
 const currentYear = new Date().getFullYear();
+const siteUrl = 'https://pontushultgren.com';
+
+// JSON-LD Structured Data for SEO
+const structuredData = {
+  "@context": "https://schema.org",
+  "@type": "MusicGroup",
+  "name": "Pontus Hultgren",
+  "alternateName": "Pontus Hultgren Music",
+  "description": "Swedish video game music orchestrator specializing in orchestral arrangements of classic game soundtracks.",
+  "url": siteUrl,
+  "image": `${siteUrl}/profile.jpg`,
+  "genre": ["Video Game Music", "Orchestral", "Soundtrack"],
+  "foundingLocation": {
+    "@type": "Place",
+    "name": "Linköping, Sweden"
+  },
+  "sameAs": [
+    "https://youtube.com/@PontusHultgren",
+    "https://open.spotify.com/artist/2hQXaxC4wndS2XXILcF3db",
+    "https://twitter.com/PontusComposer",
+    "https://patreon.com/pontuscomposer",
+    "https://music.apple.com/us/artist/pontus-hultgren/991467382"
+  ]
+};
 ---
 
 <!doctype html>
@@ -17,50 +43,65 @@ const currentYear = new Date().getFullYear();
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <meta name="description" content={description} />
     <meta name="author" content="Pontus Hultgren" />
+    <meta name="keywords" content="video game music, orchestral, arrangements, Final Fantasy, Chrono Trigger, game soundtrack, Swedish composer" />
     <meta property="og:title" content={title} />
     <meta property="og:description" content={description} />
     <meta property="og:type" content="website" />
     <meta property="og:image" content="/banner.jpeg" />
+    <meta property="og:url" content={siteUrl} />
+    <meta property="og:site_name" content="Pontus Hultgren" />
     <meta name="twitter:card" content="summary_large_image" />
     <meta name="twitter:site" content="@PontusComposer" />
+    <meta name="twitter:creator" content="@PontusComposer" />
     <meta name="twitter:image" content="/banner.jpeg" />
+    <link rel="canonical" href={siteUrl} />
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link rel="preconnect" href="https://www.youtube.com">
+    <link rel="preconnect" href="https://i.ytimg.com">
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600&family=Playfair+Display:wght@600;700&display=swap" rel="stylesheet">
     <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
+    <link rel="apple-touch-icon" href="/logo.png" />
+    <meta name="theme-color" content="#0a0a12" />
     <title>{title}</title>
     <meta name="view-transition" content="same-origin" />
+    <script type="application/ld+json" set:html={JSON.stringify(structuredData)} />
   </head>
   <body class="antialiased">
-    <nav class="fixed top-0 left-0 right-0 z-50 bg-bg-primary/80 backdrop-blur-md border-b border-white/5">
+    <!-- Floating music notes background -->
+    <MusicParticles />
+
+    <a href="#main-content" class="sr-only focus:not-sr-only focus:absolute focus:top-4 focus:left-4 focus:z-[100] focus:px-4 focus:py-2 focus:bg-accent-gold focus:text-bg-primary focus:rounded">Skip to content</a>
+
+    <nav class="fixed top-0 left-0 right-0 z-50 bg-bg-primary/80 backdrop-blur-md border-b border-white/5" role="navigation" aria-label="Main navigation">
       <div class="max-w-6xl mx-auto px-6 py-4">
         <div class="flex items-center justify-between">
-          <a href="/" class="flex items-center gap-3 gold-glow-hover transition-all">
-            <img src="/logo.png" alt="PH" class="h-10 w-10 rounded" />
+          <a href="/" class="flex items-center gap-3 gold-glow-hover transition-all" aria-label="Pontus Hultgren - Home">
+            <img src="/logo.png" alt="" class="h-10 w-10 rounded" aria-hidden="true" />
             <span class="text-xl font-heading font-bold text-accent-gold">Pontus Hultgren</span>
           </a>
-          <div class="hidden md:flex items-center gap-8">
-            <a href="/" class="text-text-secondary hover:text-text-primary transition-colors">Home</a>
-            <a href="/music" class="text-text-secondary hover:text-text-primary transition-colors">Music</a>
-            <a href="/about" class="text-text-secondary hover:text-text-primary transition-colors">About</a>
-            <a href="/support" class="btn-primary text-sm">Become an Insider</a>
+          <div class="hidden md:flex items-center gap-8" role="menubar">
+            <a href="/" class="text-text-secondary hover:text-text-primary transition-colors focus:text-accent-gold" role="menuitem">Home</a>
+            <a href="/music" class="text-text-secondary hover:text-text-primary transition-colors focus:text-accent-gold" role="menuitem">Music</a>
+            <a href="/about" class="text-text-secondary hover:text-text-primary transition-colors focus:text-accent-gold" role="menuitem">About</a>
+            <a href="/support" class="btn-primary text-sm" role="menuitem">Become an Insider</a>
           </div>
-          <button id="mobile-menu-btn" class="md:hidden text-text-secondary hover:text-text-primary">
-            <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16M4 18h16"/></svg>
+          <button id="mobile-menu-btn" class="md:hidden text-text-secondary hover:text-text-primary" aria-expanded="false" aria-controls="mobile-menu" aria-label="Toggle navigation menu">
+            <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24" aria-hidden="true"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16M4 18h16"/></svg>
           </button>
         </div>
-        <div id="mobile-menu" class="hidden md:hidden mt-4 pb-4 border-t border-white/5 pt-4">
+        <div id="mobile-menu" class="hidden md:hidden mt-4 pb-4 border-t border-white/5 pt-4" role="menu">
           <div class="flex flex-col gap-4">
-            <a href="/" class="text-text-secondary hover:text-text-primary">Home</a>
-            <a href="/music" class="text-text-secondary hover:text-text-primary">Music</a>
-            <a href="/about" class="text-text-secondary hover:text-text-primary">About</a>
-            <a href="/support" class="btn-primary text-sm w-fit">Become an Insider</a>
+            <a href="/" class="text-text-secondary hover:text-text-primary" role="menuitem">Home</a>
+            <a href="/music" class="text-text-secondary hover:text-text-primary" role="menuitem">Music</a>
+            <a href="/about" class="text-text-secondary hover:text-text-primary" role="menuitem">About</a>
+            <a href="/support" class="btn-primary text-sm w-fit" role="menuitem">Become an Insider</a>
           </div>
         </div>
       </div>
     </nav>
 
-    <main class="pt-20">
+    <main id="main-content" class="pt-20" tabindex="-1">
       <slot />
     </main>
 
@@ -89,10 +130,25 @@ const currentYear = new Date().getFullYear();
       </div>
     </footer>
 
+    <!-- Interactive Piano Keyboard -->
+    <Piano />
+
     <script>
       const menuBtn = document.getElementById('mobile-menu-btn');
       const mobileMenu = document.getElementById('mobile-menu');
-      menuBtn?.addEventListener('click', () => mobileMenu?.classList.toggle('hidden'));
+      menuBtn?.addEventListener('click', () => {
+        const isHidden = mobileMenu?.classList.toggle('hidden');
+        menuBtn?.setAttribute('aria-expanded', (!isHidden).toString());
+      });
+
+      // Close menu on escape key
+      document.addEventListener('keydown', (e) => {
+        if (e.key === 'Escape' && !mobileMenu?.classList.contains('hidden')) {
+          mobileMenu?.classList.add('hidden');
+          menuBtn?.setAttribute('aria-expanded', 'false');
+          menuBtn?.focus();
+        }
+      });
     </script>
   </body>
 </html>

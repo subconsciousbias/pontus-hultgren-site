@@ -7,6 +7,7 @@ interface Props {
 }
 
 const { title, description = 'Swedish video game music orchestrator. Listen to orchestral arrangements of your favorite game soundtracks.' } = Astro.props;
+const currentYear = new Date().getFullYear();
 ---
 
 <!doctype html>
@@ -69,7 +70,7 @@ const { title, description = 'Swedish video game music orchestrator. Listen to o
       <div class="max-w-6xl mx-auto px-6 py-12">
         <div class="flex flex-col md:flex-row justify-between items-center gap-6">
           <div class="text-center md:text-left">
-            <p class="text-text-secondary text-sm">© 2024 Pontus Hultgren. All rights reserved.</p>
+            <p class="text-text-secondary text-sm">© {currentYear} Pontus Hultgren. All rights reserved.</p>
             <p class="text-text-muted text-xs mt-1">Video game music orchestrations and arrangements.</p>
           </div>
           <div class="flex items-center gap-6">

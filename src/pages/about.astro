@@ -1,0 +1,38 @@
+---
+import Layout from '../layouts/Layout.astro';
+---
+
+<Layout title="About | Pontus Hultgren">
+  <section class="max-w-4xl mx-auto px-6 py-12">
+    <h1 class="text-4xl font-heading font-bold mb-8 text-center gold-glow">About</h1>
+    
+    <div class="card p-8 mb-12">
+      <div class="flex flex-col md:flex-row gap-8 items-center">
+        <img src="/profile.png" alt="Pontus Hultgren" class="w-48 h-48 rounded-full flex-shrink-0 border-4 border-accent-gold/30 shadow-xl" />
+        <div>
+          <h2 class="text-2xl font-heading font-bold mb-4">Pontus Hultgren</h2>
+          <p class="text-text-secondary mb-4">A Swedish orchestrator and composer working from his home studio in Linköping, Sweden. Specializing in video game music arrangements, Pontus brings beloved game soundtracks to life with full orchestral treatment.</p>
+          <p class="text-text-secondary">With a passion for both classic and modern video games, his work spans from 8-bit era classics like Mega Man to epic RPG scores from Final Fantasy and Dark Souls.</p>
+        </div>
+      </div>
+    </div>
+
+    <h2 class="text-2xl font-heading font-bold mb-6 text-center">Musical Influences</h2>
+    <div class="grid sm:grid-cols-2 lg:grid-cols-4 gap-4 mb-12">
+      <div class="card p-4 text-center"><h3 class="font-semibold text-accent-gold">Nobuo Uematsu</h3><p class="text-text-secondary text-sm">Final Fantasy</p></div>
+      <div class="card p-4 text-center"><h3 class="font-semibold text-accent-gold">Yasunori Mitsuda</h3><p class="text-text-secondary text-sm">Chrono Trigger</p></div>
+      <div class="card p-4 text-center"><h3 class="font-semibold text-accent-gold">John Williams</h3><p class="text-text-secondary text-sm">Film Scores</p></div>
+      <div class="card p-4 text-center"><h3 class="font-semibold text-accent-gold">Ennio Morricone</h3><p class="text-text-secondary text-sm">Film Scores</p></div>
+    </div>
+
+    <div class="bg-bg-secondary rounded-2xl p-8">
+      <h2 class="text-2xl font-heading font-bold mb-6 text-center">By the Numbers</h2>
+      <div class="grid grid-cols-2 md:grid-cols-4 gap-6 text-center">
+        <div><div class="text-3xl font-bold text-accent-gold font-mono">14+</div><div class="text-text-secondary text-sm">Albums</div></div>
+        <div><div class="text-3xl font-bold text-accent-gold font-mono">18M+</div><div class="text-text-secondary text-sm">Views</div></div>
+        <div><div class="text-3xl font-bold text-accent-gold font-mono">34K</div><div class="text-text-secondary text-sm">Monthly Listeners</div></div>
+        <div><div class="text-3xl font-bold text-accent-gold font-mono">2011</div><div class="text-text-secondary text-sm">Started</div></div>
+      </div>
+    </div>
+  </section>
+</Layout>

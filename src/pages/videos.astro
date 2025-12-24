@@ -1,0 +1,47 @@
+---
+import Layout from '../layouts/Layout.astro';
+import { getLatestVideos } from '../lib/youtube';
+
+const videos = await getLatestVideos(8);
+---
+
+<Layout title="Videos | Pontus Hultgren">
+  <section class="max-w-6xl mx-auto px-6 py-12">
+    <h1 class="text-4xl font-heading font-bold mb-4 text-center gold-glow">Videos</h1>
+    <p class="text-text-secondary text-center mb-12 max-w-2xl mx-auto">Watch orchestral arrangements and behind-the-scenes content on YouTube.</p>
+
+    <div class="grid md:grid-cols-2 gap-8 mb-12">
+      {videos.map((video) => (
+        <div class="card p-6">
+          <h3 class="text-lg font-semibold mb-4 text-accent-gold">{video.title}</h3>
+          <div class="aspect-video">
+            <iframe
+              width="100%"
+              height="100%"
+              src={`https://www.youtube.com/embed/${video.id}`}
+              title={video.title}
+              frameborder="0"
+              allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
+              allowfullscreen
+              loading="lazy"
+            ></iframe>
+          </div>
+        </div>
+      ))}
+    </div>
+
+    <div class="card p-6 mb-12 text-center">
+      <h2 class="text-xl font-semibold mb-4 text-accent-gold">Subscribe to the Channel</h2>
+      <p class="text-text-secondary mb-6">31K+ subscribers | 188 videos | 18M+ views</p>
+      <a href="https://youtube.com/@PontusHultgren" target="_blank" class="btn-primary">Visit YouTube Channel</a>
+    </div>
+
+    <h2 class="text-2xl font-heading font-bold mb-6">Featured Categories</h2>
+    <div class="grid sm:grid-cols-2 lg:grid-cols-4 gap-6">
+      <div class="card p-6 text-center hover:scale-105 transition-transform"><div class="text-2xl font-bold mb-4 text-accent-gold">FF</div><h3 class="font-semibold">Final Fantasy</h3></div>
+      <div class="card p-6 text-center hover:scale-105 transition-transform"><div class="text-2xl font-bold mb-4 text-accent-gold">DS</div><h3 class="font-semibold">Dark Souls</h3></div>
+      <div class="card p-6 text-center hover:scale-105 transition-transform"><div class="text-2xl font-bold mb-4 text-accent-gold">N</div><h3 class="font-semibold">Nintendo</h3></div>
+      <div class="card p-6 text-center hover:scale-105 transition-transform"><div class="text-2xl font-bold mb-4 text-accent-gold">SF</div><h3 class="font-semibold">Sci-Fi Games</h3></div>
+    </div>
+  </section>
+</Layout>

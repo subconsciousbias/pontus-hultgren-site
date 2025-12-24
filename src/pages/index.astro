@@ -1,0 +1,78 @@
+---
+import Layout from '../layouts/Layout.astro';
+import { getLatestVideos } from '../lib/youtube';
+
+const videos = await getLatestVideos(4);
+---
+
+<Layout title="Pontus Hultgren | Video Game Music Orchestrator">
+  <section class="gradient-hero min-h-[80vh] flex items-center justify-center text-center px-6">
+    <div class="max-w-4xl">
+      <img src="/profile.png" alt="Pontus Hultgren" class="w-32 h-32 md:w-40 md:h-40 rounded-full mx-auto mb-8 border-4 border-accent-gold/30 shadow-xl" />
+      <h1 class="text-5xl md:text-7xl font-heading font-bold mb-4 gold-glow">PONTUS HULTGREN</h1>
+      <p class="text-xl md:text-2xl text-text-secondary mb-8">Video Game Music Orchestrator</p>
+      <div class="flex flex-wrap justify-center gap-8 mb-12">
+        <div class="stat-item text-center">
+          <div class="text-3xl font-bold text-accent-gold font-mono">31K+</div>
+          <div class="text-sm text-text-secondary">YouTube Subscribers</div>
+        </div>
+        <div class="stat-item text-center">
+          <div class="text-3xl font-bold text-accent-gold font-mono">34K+</div>
+          <div class="text-sm text-text-secondary">Monthly Listeners</div>
+        </div>
+        <div class="stat-item text-center">
+          <div class="text-3xl font-bold text-accent-gold font-mono">238</div>
+          <div class="text-sm text-text-secondary">Patrons</div>
+        </div>
+      </div>
+      <div class="flex flex-wrap justify-center gap-4">
+        <a href="https://open.spotify.com/artist/2hQXaxC4wndS2XXILcF3db" target="_blank" class="btn-primary">Listen on Spotify</a>
+        <a href="https://youtube.com/@PontusHultgren" target="_blank" class="btn-secondary">Watch on YouTube</a>
+      </div>
+    </div>
+  </section>
+
+  <section class="max-w-6xl mx-auto px-6 py-20">
+    <h2 class="text-3xl font-heading font-bold mb-8 text-center">Latest Music</h2>
+    <div class="grid md:grid-cols-2 gap-8">
+      {videos.map((video) => (
+        <div class="card p-6">
+          <h3 class="text-lg font-semibold mb-4 text-accent-gold">{video.title}</h3>
+          <div class="aspect-video">
+            <iframe
+              width="100%"
+              height="100%"
+              src={`https://www.youtube.com/embed/${video.id}`}
+              title={video.title}
+              frameborder="0"
+              allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
+              allowfullscreen
+              loading="lazy"
+            ></iframe>
+          </div>
+        </div>
+      ))}
+    </div>
+    <div class="mt-8 text-center">
+      <a href="https://open.spotify.com/artist/2hQXaxC4wndS2XXILcF3db" target="_blank" class="btn-secondary mr-4">Full Catalog on Spotify</a>
+      <a href="https://youtube.com/@PontusHultgren" target="_blank" class="btn-secondary">All Videos on YouTube</a>
+    </div>
+  </section>
+
+  <section class="bg-bg-secondary py-20">
+    <div class="max-w-6xl mx-auto px-6">
+      <h2 class="text-3xl font-heading font-bold mb-8 text-center">Popular Works</h2>
+      <div class="grid sm:grid-cols-2 lg:grid-cols-3 gap-6">
+        <div class="card p-6 text-center"><div class="text-4xl mb-4">FF</div><h3 class="font-semibold mb-2">Final Fantasy</h3><p class="text-text-secondary text-sm">Orchestral tributes to the legendary JRPG series</p></div>
+        <div class="card p-6 text-center"><div class="text-4xl mb-4">DS</div><h3 class="font-semibold mb-2">Dark Souls</h3><p class="text-text-secondary text-sm">Epic arrangements from the Souls series</p></div>
+        <div class="card p-6 text-center"><div class="text-4xl mb-4">CT</div><h3 class="font-semibold mb-2">Chrono Trigger</h3><p class="text-text-secondary text-sm">Timeless classics reimagined</p></div>
+      </div>
+    </div>
+  </section>
+
+  <section class="max-w-4xl mx-auto px-6 py-20 text-center">
+    <h2 class="text-3xl font-heading font-bold mb-4">Support the Music</h2>
+    <p class="text-text-secondary mb-8 max-w-2xl mx-auto">Join 238 patrons supporting new orchestral arrangements every month.</p>
+    <a href="https://patreon.com/pontuscomposer" target="_blank" class="btn-primary">Become a Patron</a>
+  </section>
+</Layout>

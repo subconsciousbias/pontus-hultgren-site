@@ -1,5 +1,6 @@
 ---
 import Layout from '../layouts/Layout.astro';
+const base = import.meta.env.BASE_URL || '/';
 ---
 
 <Layout title="Pontus Hultgren | Video Game Music Orchestrator">
@@ -9,21 +10,21 @@ import Layout from '../layouts/Layout.astro';
     <div class="absolute bottom-20 right-10 w-96 h-96 bg-accent-blue/5 rounded-full blur-3xl animate-pulse-slow" style="animation-delay: 1s;"></div>
 
     <div class="max-w-4xl relative z-10">
-      <img src="/profile.jpg" alt="Pontus Hultgren" class="w-36 h-36 md:w-44 md:h-44 rounded-full mx-auto mb-8 border-4 border-accent-gold/30 shadow-2xl object-cover hover:border-accent-gold/50 transition-all duration-300 hover:scale-105" />
-      <h1 class="text-5xl md:text-7xl font-heading font-bold mb-4 gold-glow animate-fade-in">PONTUS HULTGREN</h1>
-      <p id="typewriter" class="text-xl md:text-2xl text-text-secondary mb-8 animate-fade-in-delay h-8"></p>
-      <div class="flex flex-wrap justify-center gap-8 mb-12">
+      <img src={`${base}profile.jpg`} alt="Pontus Hultgren" class="w-36 h-36 md:w-44 md:h-44 rounded-full mx-auto mb-8 border-4 border-accent-gold/30 shadow-2xl object-cover hover:border-accent-gold/50 transition-all duration-300 hover:scale-105" />
+      <h1 class="text-3xl sm:text-5xl md:text-7xl font-heading font-bold mb-4 gold-glow animate-fade-in">PONTUS HULTGREN</h1>
+      <p id="typewriter" class="text-lg sm:text-xl md:text-2xl text-text-secondary mb-8 animate-fade-in-delay h-8"></p>
+      <div class="flex flex-wrap justify-center gap-4 sm:gap-8 mb-8 sm:mb-12">
         <div class="stat-item text-center">
-          <div class="text-3xl font-bold text-accent-gold font-mono">31K+</div>
-          <div class="text-sm text-text-secondary">YouTube Subscribers</div>
+          <div class="text-2xl sm:text-3xl font-bold text-accent-gold font-mono">31K+</div>
+          <div class="text-xs sm:text-sm text-text-secondary">YouTube</div>
         </div>
         <div class="stat-item text-center">
-          <div class="text-3xl font-bold text-accent-gold font-mono">34K+</div>
-          <div class="text-sm text-text-secondary">Spotify Listeners</div>
+          <div class="text-2xl sm:text-3xl font-bold text-accent-gold font-mono">34K+</div>
+          <div class="text-xs sm:text-sm text-text-secondary">Spotify</div>
         </div>
         <div class="stat-item text-center">
-          <div class="text-3xl font-bold text-accent-gold font-mono">238</div>
-          <div class="text-sm text-text-secondary">Patrons</div>
+          <div class="text-2xl sm:text-3xl font-bold text-accent-gold font-mono">238</div>
+          <div class="text-xs sm:text-sm text-text-secondary">Patrons</div>
         </div>
       </div>
       <div class="flex flex-wrap justify-center gap-4">

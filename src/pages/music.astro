@@ -1,135 +1,132 @@
 ---
 import Layout from '../layouts/Layout.astro';
+const base = import.meta.env.BASE_URL || '/';
 ---
 
 <Layout title="Music & Videos | Pontus Hultgren">
-  <section class="max-w-6xl mx-auto px-6 py-12">
-    <h1 class="text-4xl font-heading font-bold mb-4 text-center gold-glow">Music & Videos</h1>
-    <p class="text-text-secondary text-center mb-12 max-w-2xl mx-auto">Orchestral arrangements and covers of your favorite video game soundtracks.</p>
+  <section class="max-w-6xl mx-auto px-4 sm:px-6 py-8 sm:py-12">
+    <h1 class="text-3xl sm:text-4xl font-heading font-bold mb-4 text-center gold-glow">Music & Videos</h1>
+    <p class="text-text-secondary text-center mb-8 sm:mb-12 max-w-2xl mx-auto text-sm sm:text-base">Orchestral arrangements and covers of your favorite video game soundtracks.</p>
 
-    <div class="card p-6 mb-12 text-center bg-gradient-to-br from-bg-secondary to-bg-tertiary">
-      <div class="text-5xl mb-4">▶</div>
-      <h2 class="text-2xl font-heading font-bold mb-2">Pontus Hultgren Music</h2>
-      <p class="text-text-secondary mb-4">31K+ subscribers • 188 videos • 18M+ views</p>
-      <a href="https://youtube.com/@PontusHultgren" target="_blank" class="btn-primary">Open YouTube Channel</a>
+    <div class="card p-4 sm:p-6 mb-8 sm:mb-12 text-center bg-gradient-to-br from-bg-secondary to-bg-tertiary">
+      <div class="text-4xl sm:text-5xl mb-3 sm:mb-4">▶</div>
+      <h2 class="text-xl sm:text-2xl font-heading font-bold mb-2">Pontus Hultgren Music</h2>
+      <p class="text-text-secondary mb-4 text-sm sm:text-base">31K+ subscribers • 188 videos • 18M+ views</p>
+      <a href="https://youtube.com/@PontusHultgren" target="_blank" class="btn-primary text-sm sm:text-base">Open YouTube Channel</a>
     </div>
 
-    <h2 class="text-2xl font-heading font-bold mb-6">Featured Videos</h2>
-    <div class="grid md:grid-cols-2 gap-6 mb-12">
-      <div class="card p-4">
+    <h2 class="text-xl sm:text-2xl font-heading font-bold mb-4 sm:mb-6">Featured Videos</h2>
+    <div class="grid md:grid-cols-2 gap-4 sm:gap-6 mb-8 sm:mb-12">
+      <div class="card p-3 sm:p-4">
         <div class="aspect-video">
           <iframe width="100%" height="100%" src="https://www.youtube.com/embed/2cqPki0q7Hc" title="Final Fantasy VII - Those Who Fight" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen loading="lazy"></iframe>
         </div>
-        <h3 class="mt-3 font-semibold text-accent-gold">Final Fantasy VII - Those Who Fight</h3>
+        <h3 class="mt-2 sm:mt-3 font-semibold text-accent-gold text-sm sm:text-base">Final Fantasy VII - Those Who Fight</h3>
       </div>
-      <div class="card p-4">
+      <div class="card p-3 sm:p-4">
         <div class="aspect-video">
           <iframe width="100%" height="100%" src="https://www.youtube.com/embed/NyncAG8flno" title="Final Fantasy V - Clash on the Big Bridge" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen loading="lazy"></iframe>
         </div>
-        <h3 class="mt-3 font-semibold text-accent-gold">Final Fantasy V - Clash on the Big Bridge</h3>
+        <h3 class="mt-2 sm:mt-3 font-semibold text-accent-gold text-sm sm:text-base">Final Fantasy V - Clash on the Big Bridge</h3>
       </div>
-      <div class="card p-4">
+      <div class="card p-3 sm:p-4">
         <div class="aspect-video">
           <iframe width="100%" height="100%" src="https://www.youtube.com/embed/WdFym7z9ukI" title="Final Fantasy X - Enemy Attack" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen loading="lazy"></iframe>
         </div>
-        <h3 class="mt-3 font-semibold text-accent-gold">Final Fantasy X - Enemy Attack</h3>
+        <h3 class="mt-2 sm:mt-3 font-semibold text-accent-gold text-sm sm:text-base">Final Fantasy X - Enemy Attack</h3>
       </div>
-      <div class="card p-4">
+      <div class="card p-3 sm:p-4">
         <div class="aspect-video">
           <iframe width="100%" height="100%" src="https://www.youtube.com/embed/1mV8PpLc2Mo" title="Sea of Stars - Battle Theme" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen loading="lazy"></iframe>
         </div>
-        <h3 class="mt-3 font-semibold text-accent-gold">Sea of Stars - Battle Theme</h3>
+        <h3 class="mt-2 sm:mt-3 font-semibold text-accent-gold text-sm sm:text-base">Sea of Stars - Battle Theme</h3>
       </div>
     </div>
 
-    <h2 class="text-2xl font-heading font-bold mb-6">Discography</h2>
-    <div class="grid sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-6 mb-12">
-      <a href="https://open.spotify.com/album/0xo3KEZ5k8dDaQ0refhVnY" target="_blank" class="card p-4 hover:scale-105 transition-transform">
-        <img src="/albums/chrono-trigger.jpg" alt="Beyond the Flow of Time" class="aspect-square rounded-lg mb-4 object-cover" />
-        <h3 class="font-semibold">Beyond the Flow of Time</h3>
-        <p class="text-text-secondary text-sm">Chrono Trigger • 2021</p>
+    <h2 class="text-xl sm:text-2xl font-heading font-bold mb-4 sm:mb-6">Discography</h2>
+    <div class="grid grid-cols-2 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-3 sm:gap-6 mb-8 sm:mb-12">
+      <a href="https://open.spotify.com/album/0xo3KEZ5k8dDaQ0refhVnY" target="_blank" class="card p-2 sm:p-4 hover:scale-105 transition-transform">
+        <img src={`${base}albums/chrono-trigger.jpg`} alt="Beyond the Flow of Time" class="aspect-square rounded-lg mb-2 sm:mb-4 object-cover w-full" />
+        <h3 class="font-semibold text-xs sm:text-base leading-tight">Beyond the Flow of Time</h3>
+        <p class="text-text-secondary text-xs sm:text-sm">Chrono Trigger • 2021</p>
       </a>
-      <a href="https://open.spotify.com/album/0ALyspGJt0uJbtaEU7iqsz" target="_blank" class="card p-4 hover:scale-105 transition-transform">
-        <img src="/albums/ff6-symphony.jpg" alt="The Final Fantasy VI Symphony" class="aspect-square rounded-lg mb-4 object-cover" />
-        <h3 class="font-semibold">The Final Fantasy VI Symphony</h3>
-        <p class="text-text-secondary text-sm">Full Orchestra • 2016</p>
+      <a href="https://open.spotify.com/album/0ALyspGJt0uJbtaEU7iqsz" target="_blank" class="card p-2 sm:p-4 hover:scale-105 transition-transform">
+        <img src={`${base}albums/ff6-symphony.jpg`} alt="The Final Fantasy VI Symphony" class="aspect-square rounded-lg mb-2 sm:mb-4 object-cover w-full" />
+        <h3 class="font-semibold text-xs sm:text-base leading-tight">FF VI Symphony</h3>
+        <p class="text-text-secondary text-xs sm:text-sm">Full Orchestra • 2016</p>
       </a>
-      <a href="https://open.spotify.com/album/2hsPHISPcb0Bwm026DBlNI" target="_blank" class="card p-4 hover:scale-105 transition-transform">
-        <img src="/albums/bloodlines.jpg" alt="BLOODLINES" class="aspect-square rounded-lg mb-4 object-cover" />
-        <h3 class="font-semibold">BLOODLINES</h3>
-        <p class="text-text-secondary text-sm">Castlevania: SotN • 2020</p>
+      <a href="https://open.spotify.com/album/2hsPHISPcb0Bwm026DBlNI" target="_blank" class="card p-2 sm:p-4 hover:scale-105 transition-transform">
+        <img src={`${base}albums/bloodlines.jpg`} alt="BLOODLINES" class="aspect-square rounded-lg mb-2 sm:mb-4 object-cover w-full" />
+        <h3 class="font-semibold text-xs sm:text-base leading-tight">BLOODLINES</h3>
+        <p class="text-text-secondary text-xs sm:text-sm">Castlevania • 2020</p>
       </a>
-      <a href="https://open.spotify.com/album/6A5rBA0W8hfaGWx98KYu5A" target="_blank" class="card p-4 hover:scale-105 transition-transform">
-        <img src="/albums/songs-from-spira.jpg" alt="Songs From Spira" class="aspect-square rounded-lg mb-4 object-cover" />
-        <h3 class="font-semibold">Songs From Spira</h3>
-        <p class="text-text-secondary text-sm">Final Fantasy X • 2019</p>
+      <a href="https://open.spotify.com/album/6A5rBA0W8hfaGWx98KYu5A" target="_blank" class="card p-2 sm:p-4 hover:scale-105 transition-transform">
+        <img src={`${base}albums/songs-from-spira.jpg`} alt="Songs From Spira" class="aspect-square rounded-lg mb-2 sm:mb-4 object-cover w-full" />
+        <h3 class="font-semibold text-xs sm:text-base leading-tight">Songs From Spira</h3>
+        <p class="text-text-secondary text-xs sm:text-sm">Final Fantasy X • 2019</p>
       </a>
-      <a href="https://open.spotify.com/album/3Or1TygOANKULV6Qx2OGJ1" target="_blank" class="card p-4 hover:scale-105 transition-transform">
-        <img src="/albums/promise-ff8.jpg" alt="Promise" class="aspect-square rounded-lg mb-4 object-cover" />
-        <h3 class="font-semibold">Promise</h3>
-        <p class="text-text-secondary text-sm">Final Fantasy VIII • 2016</p>
+      <a href="https://open.spotify.com/album/3Or1TygOANKULV6Qx2OGJ1" target="_blank" class="card p-2 sm:p-4 hover:scale-105 transition-transform">
+        <img src={`${base}albums/promise-ff8.jpg`} alt="Promise" class="aspect-square rounded-lg mb-2 sm:mb-4 object-cover w-full" />
+        <h3 class="font-semibold text-xs sm:text-base leading-tight">Promise</h3>
+        <p class="text-text-secondary text-xs sm:text-sm">Final Fantasy VIII • 2016</p>
       </a>
-      <a href="https://open.spotify.com/album/3bF9qLWmQp4Y0r8aEsBrIa" target="_blank" class="card p-4 hover:scale-105 transition-transform">
-        <img src="/albums/fight-jrpg.jpg" alt="FIGHT!" class="aspect-square rounded-lg mb-4 object-cover" />
-        <h3 class="font-semibold">FIGHT!</h3>
-        <p class="text-text-secondary text-sm">JRPG Battle Themes • 2021</p>
+      <a href="https://open.spotify.com/album/3bF9qLWmQp4Y0r8aEsBrIa" target="_blank" class="card p-2 sm:p-4 hover:scale-105 transition-transform">
+        <img src={`${base}albums/fight-jrpg.jpg`} alt="FIGHT!" class="aspect-square rounded-lg mb-2 sm:mb-4 object-cover w-full" />
+        <h3 class="font-semibold text-xs sm:text-base leading-tight">FIGHT!</h3>
+        <p class="text-text-secondary text-xs sm:text-sm">JRPG Battles • 2021</p>
       </a>
-      <a href="https://open.spotify.com/album/6aXyVzElMqu2SXPEwtvQi5" target="_blank" class="card p-4 hover:scale-105 transition-transform">
-        <img src="/albums/place-to-rest.jpg" alt="A Place to Rest" class="aspect-square rounded-lg mb-4 object-cover" />
-        <h3 class="font-semibold">A Place to Rest</h3>
-        <p class="text-text-secondary text-sm">Resident Evil • 2021</p>
+      <a href="https://open.spotify.com/album/6aXyVzElMqu2SXPEwtvQi5" target="_blank" class="card p-2 sm:p-4 hover:scale-105 transition-transform">
+        <img src={`${base}albums/place-to-rest.jpg`} alt="A Place to Rest" class="aspect-square rounded-lg mb-2 sm:mb-4 object-cover w-full" />
+        <h3 class="font-semibold text-xs sm:text-base leading-tight">A Place to Rest</h3>
+        <p class="text-text-secondary text-xs sm:text-sm">Resident Evil • 2021</p>
       </a>
-      <a href="https://open.spotify.com/album/2N4LJNvQLEICfVnTYKLudb" target="_blank" class="card p-4 hover:scale-105 transition-transform">
-        <img src="/albums/place-to-call-home.jpg" alt="A Place to Call Home" class="aspect-square rounded-lg mb-4 object-cover" />
-        <h3 class="font-semibold">A Place to Call Home</h3>
-        <p class="text-text-secondary text-sm">Final Fantasy IX • 2018</p>
+      <a href="https://open.spotify.com/album/2N4LJNvQLEICfVnTYKLudb" target="_blank" class="card p-2 sm:p-4 hover:scale-105 transition-transform">
+        <img src={`${base}albums/place-to-call-home.jpg`} alt="A Place to Call Home" class="aspect-square rounded-lg mb-2 sm:mb-4 object-cover w-full" />
+        <h3 class="font-semibold text-xs sm:text-base leading-tight">A Place to Call Home</h3>
+        <p class="text-text-secondary text-xs sm:text-sm">Final Fantasy IX • 2018</p>
       </a>
     </div>
-    <div class="text-center mb-12">
-      <a href="https://open.spotify.com/artist/2hQXaxC4wndS2XXILcF3db/discography/album" target="_blank" class="btn-secondary">View Full Discography on Spotify</a>
+    <div class="text-center mb-8 sm:mb-12">
+      <a href="https://open.spotify.com/artist/2hQXaxC4wndS2XXILcF3db/discography/album" target="_blank" class="btn-secondary text-sm sm:text-base">View Full Discography on Spotify</a>
     </div>
 
-    <h2 class="text-2xl font-heading font-bold mb-6 text-center">Listen Everywhere</h2>
-    <div class="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 gap-4 mb-8">
-      <a href="https://open.spotify.com/artist/2hQXaxC4wndS2XXILcF3db" target="_blank" class="card p-4 text-center hover:scale-105 transition-transform">
-        <div class="text-accent-gold text-2xl mb-2">♫</div>
-        <span class="font-semibold">Spotify</span>
+    <h2 class="text-xl sm:text-2xl font-heading font-bold mb-4 sm:mb-6 text-center">Listen Everywhere</h2>
+    <div class="grid grid-cols-3 sm:grid-cols-4 md:grid-cols-5 gap-2 sm:gap-4 mb-8">
+      <a href="https://open.spotify.com/artist/2hQXaxC4wndS2XXILcF3db" target="_blank" class="card p-2 sm:p-4 text-center hover:scale-105 transition-transform">
+        <div class="text-accent-gold text-lg sm:text-2xl mb-1 sm:mb-2">♫</div>
+        <span class="font-semibold text-xs sm:text-base">Spotify</span>
       </a>
-      <a href="https://music.apple.com/us/artist/pontus-hultgren/991467382" target="_blank" class="card p-4 text-center hover:scale-105 transition-transform">
-        <div class="text-accent-gold text-2xl mb-2">♫</div>
-        <span class="font-semibold">Apple Music</span>
+      <a href="https://music.apple.com/us/artist/pontus-hultgren/991467382" target="_blank" class="card p-2 sm:p-4 text-center hover:scale-105 transition-transform">
+        <div class="text-accent-gold text-lg sm:text-2xl mb-1 sm:mb-2">♫</div>
+        <span class="font-semibold text-xs sm:text-base">Apple</span>
       </a>
-      <a href="https://youtube.com/@PontusHultgren" target="_blank" class="card p-4 text-center hover:scale-105 transition-transform">
-        <div class="text-accent-gold text-2xl mb-2">▶</div>
-        <span class="font-semibold">YouTube</span>
+      <a href="https://youtube.com/@PontusHultgren" target="_blank" class="card p-2 sm:p-4 text-center hover:scale-105 transition-transform">
+        <div class="text-accent-gold text-lg sm:text-2xl mb-1 sm:mb-2">▶</div>
+        <span class="font-semibold text-xs sm:text-base">YouTube</span>
       </a>
-      <a href="https://tidal.com/browse/artist/14035179" target="_blank" class="card p-4 text-center hover:scale-105 transition-transform">
-        <div class="text-accent-gold text-2xl mb-2">♫</div>
-        <span class="font-semibold">TIDAL</span>
+      <a href="https://tidal.com/browse/artist/14035179" target="_blank" class="card p-2 sm:p-4 text-center hover:scale-105 transition-transform">
+        <div class="text-accent-gold text-lg sm:text-2xl mb-1 sm:mb-2">♫</div>
+        <span class="font-semibold text-xs sm:text-base">TIDAL</span>
       </a>
-      <a href="https://music.amazon.com/artists/B01ENCV6SA/pontus-hultgren" target="_blank" class="card p-4 text-center hover:scale-105 transition-transform">
-        <div class="text-accent-gold text-2xl mb-2">♫</div>
-        <span class="font-semibold">Amazon Music</span>
+      <a href="https://music.amazon.com/artists/B01ENCV6SA/pontus-hultgren" target="_blank" class="card p-2 sm:p-4 text-center hover:scale-105 transition-transform">
+        <div class="text-accent-gold text-lg sm:text-2xl mb-1 sm:mb-2">♫</div>
+        <span class="font-semibold text-xs sm:text-base">Amazon</span>
       </a>
-      <a href="https://www.deezer.com/us/artist/10251744" target="_blank" class="card p-4 text-center hover:scale-105 transition-transform">
-        <div class="text-accent-gold text-2xl mb-2">♫</div>
-        <span class="font-semibold">Deezer</span>
+      <a href="https://www.deezer.com/us/artist/10251744" target="_blank" class="card p-2 sm:p-4 text-center hover:scale-105 transition-transform">
+        <div class="text-accent-gold text-lg sm:text-2xl mb-1 sm:mb-2">♫</div>
+        <span class="font-semibold text-xs sm:text-base">Deezer</span>
       </a>
-      <a href="https://soundcloud.com/pontushultgren" target="_blank" class="card p-4 text-center hover:scale-105 transition-transform">
-        <div class="text-accent-gold text-2xl mb-2">☁</div>
-        <span class="font-semibold">SoundCloud</span>
+      <a href="https://soundcloud.com/pontushultgren" target="_blank" class="card p-2 sm:p-4 text-center hover:scale-105 transition-transform">
+        <div class="text-accent-gold text-lg sm:text-2xl mb-1 sm:mb-2">☁</div>
+        <span class="font-semibold text-xs sm:text-base">SoundCloud</span>
       </a>
-      <a href="https://www.qobuz.com/us-en/interpreter/pontus-hultgren/2621366" target="_blank" class="card p-4 text-center hover:scale-105 transition-transform">
-        <div class="text-accent-gold text-2xl mb-2">♫</div>
-        <span class="font-semibold">Qobuz</span>
+      <a href="https://www.qobuz.com/us-en/interpreter/pontus-hultgren/2621366" target="_blank" class="card p-2 sm:p-4 text-center hover:scale-105 transition-transform">
+        <div class="text-accent-gold text-lg sm:text-2xl mb-1 sm:mb-2">♫</div>
+        <span class="font-semibold text-xs sm:text-base">Qobuz</span>
       </a>
-      <a href="https://www.beatport.com/artist/pontus-hultgren/1024983" target="_blank" class="card p-4 text-center hover:scale-105 transition-transform">
-        <div class="text-accent-gold text-2xl mb-2">♫</div>
-        <span class="font-semibold">Beatport</span>
-      </a>
-      <a href="https://patreon.com/pontuscomposer" target="_blank" class="card p-4 text-center hover:scale-105 transition-transform">
-        <div class="text-accent-gold text-2xl mb-2">★</div>
-        <span class="font-semibold">Patreon</span>
+      <a href="https://patreon.com/pontuscomposer" target="_blank" class="card p-2 sm:p-4 text-center hover:scale-105 transition-transform">
+        <div class="text-accent-gold text-lg sm:text-2xl mb-1 sm:mb-2">★</div>
+        <span class="font-semibold text-xs sm:text-base">Patreon</span>
       </a>
     </div>
   </section>

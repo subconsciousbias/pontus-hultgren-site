@@ -42,6 +42,13 @@
       </div>
 
       <div class="piano-controls-right">
+        <div class="sound-mode-toggle">
+          <button id="sound-mode-btn" class="control-btn sound-mode-btn" aria-label="Toggle sound mode">
+            <span class="mode-icon piano-icon">🎹</span>
+            <span class="mode-icon chip-icon hidden">👾</span>
+            <span class="mode-label">Piano</span>
+          </button>
+        </div>
         <div class="volume-control">
           <svg class="w-4 h-4 volume-icon" fill="currentColor" viewBox="0 0 24 24">
             <path d="M3 9v6h4l5 5V4L7 9H3zm13.5 3c0-1.77-1.02-3.29-2.5-4.03v8.05c1.48-.73 2.5-2.25 2.5-4.02z"/>
@@ -765,6 +772,42 @@
     }
   }
 
+  /* Sound Mode Toggle */
+  .sound-mode-toggle {
+    display: flex;
+    align-items: center;
+  }
+
+  .sound-mode-btn {
+    display: flex;
+    align-items: center;
+    gap: 0.4rem;
+    min-width: 90px;
+    justify-content: center;
+  }
+
+  .sound-mode-btn.chip-mode {
+    background: rgba(138, 43, 226, 0.15);
+    border-color: rgba(138, 43, 226, 0.4);
+    color: #bb86fc;
+  }
+
+  .sound-mode-btn.chip-mode:hover {
+    background: rgba(138, 43, 226, 0.25);
+    border-color: rgba(138, 43, 226, 0.6);
+    color: #e1bee7;
+  }
+
+  .mode-icon {
+    font-size: 1rem;
+    line-height: 1;
+  }
+
+  .mode-label {
+    font-size: 0.75rem;
+    font-weight: 500;
+  }
+
   /* Hidden utility */
   .hidden {
     display: none !important;
@@ -784,6 +827,8 @@
     var midiName = document.getElementById('midi-name');
     var volumeSlider = document.getElementById('piano-volume');
     var volumeValue = document.querySelector('.volume-value');
+    var soundModeBtn = document.getElementById('sound-mode-btn');
+    var soundMode = 'piano'; // 'piano' or 'chip'
 
     if (!pianoKeyboard) {
       console.error('Piano keyboard element not found');
@@ -792,6 +837,7 @@
 
     var audioContext = null;
     var synth = null;
+    var chipSynth = null;
     var midiData = null;
     var isPlaying = false;
     var playbackTimeouts = [];
@@ -1029,6 +1075,72 @@
           }
         }
       };
+
+      // Chiptune synth - 8-bit style square waves
+      chipSynth = {
+        activeNotes: new Map(),
+        play: function(midiNote) {
+          if (!audioContext) return;
+          var frequency = 440 * Math.pow(2, (midiNote - 69) / 12);
+          var t = audioContext.currentTime;
+
+          // Classic 8-bit sound: square wave with quick envelope
+          var osc1 = audioContext.createOscillator();
+          var osc2 = audioContext.createOscillator();
+          var gainNode = audioContext.createGain();
+
+          // Main square wave
+          osc1.type = 'square';
+          osc1.frequency.setValueAtTime(frequency, t);
+
+          // Slight detune for thickness (like NES)
+          osc2.type = 'square';
+          osc2.frequency.setValueAtTime(frequency * 1.002, t);
+
+          // Quick 8-bit envelope - instant attack, quick decay
+          gainNode.gain.setValueAtTime(0, t);
+          gainNode.gain.linearRampToValueAtTime(volume * 0.25, t + 0.005); // Instant attack
+          gainNode.gain.linearRampToValueAtTime(volume * 0.18, t + 0.05);  // Quick decay to sustain
+          gainNode.gain.setValueAtTime(volume * 0.18, t + 0.1);            // Hold sustain
+
+          // Mix oscillators
+          var mixer = audioContext.createGain();
+          mixer.gain.setValueAtTime(0.6, t);
+
+          osc1.connect(mixer);
+          osc2.connect(mixer);
+          mixer.connect(gainNode);
+
+          // Connect directly to compressor (skip reverb for crisp 8-bit sound)
+          gainNode.connect(compressor);
+
+          osc1.start(t);
+          osc2.start(t);
+
+          this.activeNotes.set(midiNote, {
+            oscillators: [osc1, osc2],
+            gainNode: gainNode
+          });
+        },
+        stop: function(midiNote) {
+          if (!audioContext) return;
+          var note = this.activeNotes.get(midiNote);
+          if (note) {
+            var t = audioContext.currentTime;
+            // Quick release for snappy 8-bit feel
+            note.gainNode.gain.cancelScheduledValues(t);
+            note.gainNode.gain.setValueAtTime(note.gainNode.gain.value, t);
+            note.gainNode.gain.linearRampToValueAtTime(0, t + 0.03);
+
+            setTimeout(function() {
+              note.oscillators.forEach(function(osc) {
+                try { osc.stop(); } catch(e) {}
+              });
+            }, 50);
+            this.activeNotes.delete(midiNote);
+          }
+        }
+      };
     }
 
     // Visualizer bars
@@ -1048,12 +1160,20 @@
 
     function playNote(midiNote) {
       initAudio();
-      if (synth) synth.play(midiNote);
+      if (soundMode === 'chip' && chipSynth) {
+        chipSynth.play(midiNote);
+      } else if (synth) {
+        synth.play(midiNote);
+      }
       triggerVisualizer();
     }
 
     function stopNote(midiNote) {
-      if (synth) synth.stop(midiNote);
+      if (soundMode === 'chip' && chipSynth) {
+        chipSynth.stop(midiNote);
+      } else if (synth) {
+        synth.stop(midiNote);
+      }
     }
 
     function highlightKey(midiNote, active) {
@@ -1147,6 +1267,30 @@
       volumeSlider.addEventListener('input', function(e) {
         volume = parseInt(e.target.value) / 100;
         if (volumeValue) volumeValue.textContent = Math.round(volume * 100) + '%';
+      });
+    }
+
+    // Sound mode toggle
+    if (soundModeBtn) {
+      soundModeBtn.addEventListener('click', function() {
+        initAudio();
+        var pianoIcon = soundModeBtn.querySelector('.piano-icon');
+        var chipIcon = soundModeBtn.querySelector('.chip-icon');
+        var modeLabel = soundModeBtn.querySelector('.mode-label');
+
+        if (soundMode === 'piano') {
+          soundMode = 'chip';
+          soundModeBtn.classList.add('chip-mode');
+          if (pianoIcon) pianoIcon.classList.add('hidden');
+          if (chipIcon) chipIcon.classList.remove('hidden');
+          if (modeLabel) modeLabel.textContent = 'Chip';
+        } else {
+          soundMode = 'piano';
+          soundModeBtn.classList.remove('chip-mode');
+          if (pianoIcon) pianoIcon.classList.remove('hidden');
+          if (chipIcon) chipIcon.classList.add('hidden');
+          if (modeLabel) modeLabel.textContent = 'Piano';
+        }
       });
     }
 

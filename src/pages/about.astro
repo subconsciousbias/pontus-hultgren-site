@@ -1,5 +1,6 @@
 ---
 import Layout from '../layouts/Layout.astro';
+const base = import.meta.env.BASE_URL || '/';
 ---
 
 <Layout title="About | Pontus Hultgren" description="Learn about Pontus Hultgren, Swedish video game music orchestrator bringing beloved game soundtracks to life with full orchestral arrangements.">
@@ -13,7 +14,7 @@ import Layout from '../layouts/Layout.astro';
       <div class="flex flex-col lg:flex-row gap-8 lg:gap-12 items-center relative">
         <div class="flex-shrink-0">
           <img
-            src="/profile.jpg"
+            src={`${base}profile.jpg`}
             alt="Pontus Hultgren"
             class="w-56 h-56 lg:w-64 lg:h-64 rounded-2xl object-cover border-4 border-accent-gold/20 shadow-2xl hover:border-accent-gold/40 transition-all duration-300"
           />

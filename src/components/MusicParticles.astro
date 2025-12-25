@@ -1,11 +1,12 @@
 ---
-// Floating music notes particle effect
+// Floating music notes and Christmas snow particle effect
 ---
 
 <div id="music-particles" class="music-particles" aria-hidden="true"></div>
+<div id="snow-particles" class="snow-particles" aria-hidden="true"></div>
 
 <style>
-  .music-particles {
+  .music-particles, .snow-particles {
     position: fixed;
     top: 0;
     left: 0;
@@ -14,6 +15,10 @@
     pointer-events: none;
     z-index: 1;
     overflow: hidden;
+  }
+
+  .snow-particles {
+    z-index: 2;
   }
 
   .music-note {
@@ -46,15 +51,92 @@
     animation-timing-function: ease-in-out;
   }
 
-  /* Different note styles */
   .music-note.glow {
     text-shadow: 0 0 10px rgba(212, 175, 55, 0.5);
+  }
+
+  /* Christmas Snow */
+  .snowflake {
+    position: absolute;
+    color: rgba(255, 255, 255, 0.8);
+    font-size: 1rem;
+    animation: snowfall linear infinite;
+    pointer-events: none;
+    user-select: none;
+    text-shadow: 0 0 5px rgba(255, 255, 255, 0.5);
+  }
+
+  @keyframes snowfall {
+    0% {
+      transform: translateY(-10vh) translateX(0) rotate(0deg);
+      opacity: 0;
+    }
+    5% {
+      opacity: 1;
+    }
+    95% {
+      opacity: 1;
+    }
+    100% {
+      transform: translateY(105vh) translateX(var(--drift, 20px)) rotate(360deg);
+      opacity: 0;
+    }
+  }
+
+  /* Gentle swaying for some snowflakes */
+  .snowflake.sway {
+    animation: snowfallSway linear infinite;
+  }
+
+  @keyframes snowfallSway {
+    0% {
+      transform: translateY(-10vh) translateX(0) rotate(0deg);
+      opacity: 0;
+    }
+    5% {
+      opacity: 1;
+    }
+    25% {
+      transform: translateY(20vh) translateX(15px) rotate(90deg);
+    }
+    50% {
+      transform: translateY(50vh) translateX(-10px) rotate(180deg);
+    }
+    75% {
+      transform: translateY(75vh) translateX(20px) rotate(270deg);
+    }
+    95% {
+      opacity: 1;
+    }
+    100% {
+      transform: translateY(105vh) translateX(5px) rotate(360deg);
+      opacity: 0;
+    }
+  }
+
+  /* Christmas glow on gold elements */
+  .christmas-glow {
+    animation: christmasGlow 3s ease-in-out infinite alternate;
+  }
+
+  @keyframes christmasGlow {
+    0% {
+      filter: drop-shadow(0 0 5px rgba(212, 175, 55, 0.3));
+    }
+    100% {
+      filter: drop-shadow(0 0 15px rgba(212, 175, 55, 0.6));
+    }
   }
 </style>
 
 <script>
   const particles = document.getElementById('music-particles');
+  const snowContainer = document.getElementById('snow-particles');
   const notes = ['♪', '♫', '♬', '♩', '𝄞', '𝄢'];
+  const snowflakes = ['❄', '❅', '❆', '✻', '✼', '❋'];
+
+  // Check if it's December (Christmas season)
+  const isChristmasSeason = new Date().getMonth() === 11; // December = 11
 
   function createNote() {
     const note = document.createElement('span');
@@ -72,10 +154,42 @@
 
     particles?.appendChild(note);
 
-    // Remove after animation
     setTimeout(() => {
       note.remove();
     }, 35000);
+  }
+
+  function createSnowflake() {
+    if (!snowContainer) return;
+
+    const flake = document.createElement('span');
+    flake.className = 'snowflake';
+
+    // Mix of snowflakes and small dots for variety
+    if (Math.random() > 0.3) {
+      flake.textContent = snowflakes[Math.floor(Math.random() * snowflakes.length)];
+    } else {
+      flake.textContent = '•';
+      flake.style.fontSize = (0.3 + Math.random() * 0.5) + 'rem';
+    }
+
+    flake.style.left = Math.random() * 100 + 'vw';
+    flake.style.animationDuration = (8 + Math.random() * 12) + 's';
+    flake.style.animationDelay = Math.random() * 2 + 's';
+    flake.style.fontSize = (0.5 + Math.random() * 1) + 'rem';
+    flake.style.opacity = (0.4 + Math.random() * 0.5).toString();
+    flake.style.setProperty('--drift', (Math.random() * 40 - 20) + 'px');
+
+    // Some snowflakes sway
+    if (Math.random() > 0.6) {
+      flake.classList.add('sway');
+    }
+
+    snowContainer.appendChild(flake);
+
+    setTimeout(() => {
+      flake.remove();
+    }, 25000);
   }
 
   // Create initial notes
@@ -86,13 +200,23 @@
   // Continuously create new notes
   setInterval(createNote, 2000);
 
+  // Christmas snow - always show for the gift!
+  // Create initial snowflakes
+  for (let i = 0; i < 30; i++) {
+    setTimeout(createSnowflake, i * 100);
+  }
+
+  // Continuously create snowflakes
+  setInterval(createSnowflake, 400);
+
   // Reduce particles when piano is open (performance)
   const pianoContainer = document.getElementById('piano-container');
   const observer = new MutationObserver((mutations) => {
     mutations.forEach((mutation) => {
       if (mutation.attributeName === 'class') {
         const isVisible = pianoContainer?.classList.contains('visible');
-        particles!.style.opacity = isVisible ? '0.3' : '1';
+        if (particles) particles.style.opacity = isVisible ? '0.3' : '1';
+        if (snowContainer) snowContainer.style.opacity = isVisible ? '0.5' : '1';
       }
     });
   });

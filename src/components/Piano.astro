@@ -19,25 +19,31 @@
       </div>
 
       <div class="piano-controls-center">
-        <label class="control-btn upload-btn">
-          <input type="file" id="midi-upload" accept=".mid,.midi" class="hidden" />
-          <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 19V6l12-3v13M9 19c0 1.105-1.343 2-3 2s-3-.895-3-2 1.343-2 3-2 3 .895 3 2zm12-3c0 1.105-1.343 2-3 2s-3-.895-3-2 1.343-2 3-2 3 .895 3 2zM9 10l12-3"/>
-          </svg>
-          <span>Load MIDI</span>
-        </label>
-        <button id="midi-play" class="control-btn play-btn hidden">
-          <svg class="w-4 h-4" fill="currentColor" viewBox="0 0 24 24">
-            <path d="M8 5v14l11-7z"/>
-          </svg>
-          <span>Play</span>
-        </button>
-        <button id="midi-stop" class="control-btn stop-btn hidden">
-          <svg class="w-4 h-4" fill="currentColor" viewBox="0 0 24 24">
-            <rect x="6" y="6" width="12" height="12" rx="1"/>
-          </svg>
-          <span>Stop</span>
-        </button>
+        <div class="melody-presets">
+          <button class="preset-btn" data-melody="ff-prelude" title="Final Fantasy Prelude">FF</button>
+          <button class="preset-btn" data-melody="chrono" title="Chrono Trigger">CT</button>
+          <button class="preset-btn" data-melody="zelda" title="Zelda's Lullaby">ZL</button>
+          <button class="preset-btn" data-melody="mario" title="Super Mario">SM</button>
+        </div>
+        <div class="midi-controls">
+          <label class="control-btn upload-btn">
+            <input type="file" id="midi-upload" accept=".mid,.midi" class="hidden" />
+            <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 19V6l12-3v13M9 19c0 1.105-1.343 2-3 2s-3-.895-3-2 1.343-2 3-2 3 .895 3 2zm12-3c0 1.105-1.343 2-3 2s-3-.895-3-2 1.343-2 3-2 3 .895 3 2zM9 10l12-3"/>
+            </svg>
+            <span>MIDI</span>
+          </label>
+          <button id="midi-play" class="control-btn play-btn hidden">
+            <svg class="w-4 h-4" fill="currentColor" viewBox="0 0 24 24">
+              <path d="M8 5v14l11-7z"/>
+            </svg>
+          </button>
+          <button id="midi-stop" class="control-btn stop-btn hidden">
+            <svg class="w-4 h-4" fill="currentColor" viewBox="0 0 24 24">
+              <rect x="6" y="6" width="12" height="12" rx="1"/>
+            </svg>
+          </button>
+        </div>
         <span id="midi-name" class="midi-filename"></span>
       </div>
 
@@ -46,6 +52,7 @@
           <button id="sound-mode-btn" class="control-btn sound-mode-btn" aria-label="Toggle sound mode">
             <span class="mode-icon piano-icon">🎹</span>
             <span class="mode-icon chip-icon hidden">👾</span>
+            <span class="mode-icon strings-icon hidden">🎻</span>
             <span class="mode-label">Piano</span>
           </button>
         </div>
@@ -225,7 +232,54 @@
   .piano-controls-center {
     display: flex;
     align-items: center;
-    gap: 0.5rem;
+    gap: 0.75rem;
+  }
+
+  .melody-presets {
+    display: flex;
+    gap: 0.25rem;
+  }
+
+  .preset-btn {
+    padding: 0.4rem 0.6rem;
+    background: linear-gradient(135deg, rgba(212, 175, 55, 0.15) 0%, rgba(212, 175, 55, 0.05) 100%);
+    border: 1px solid rgba(212, 175, 55, 0.3);
+    border-radius: 6px;
+    color: #d4af37;
+    font-size: 0.7rem;
+    font-weight: 700;
+    font-family: 'Playfair Display', serif;
+    cursor: pointer;
+    transition: all 0.2s ease;
+    letter-spacing: 0.05em;
+  }
+
+  .preset-btn:hover {
+    background: linear-gradient(135deg, rgba(212, 175, 55, 0.3) 0%, rgba(212, 175, 55, 0.15) 100%);
+    border-color: rgba(212, 175, 55, 0.6);
+    transform: translateY(-1px);
+    box-shadow: 0 4px 12px rgba(212, 175, 55, 0.2);
+  }
+
+  .preset-btn:active {
+    transform: translateY(0);
+  }
+
+  .preset-btn.playing {
+    background: linear-gradient(135deg, #d4af37 0%, #b8941f 100%);
+    color: #0a0a0a;
+    animation: presetPulse 0.5s ease infinite alternate;
+  }
+
+  @keyframes presetPulse {
+    from { box-shadow: 0 0 10px rgba(212, 175, 55, 0.4); }
+    to { box-shadow: 0 0 20px rgba(212, 175, 55, 0.7); }
+  }
+
+  .midi-controls {
+    display: flex;
+    align-items: center;
+    gap: 0.25rem;
   }
 
   .control-btn {
@@ -615,6 +669,26 @@
     filter: blur(4px);
   }
 
+  /* Key press particle burst */
+  :global(.key-particle) {
+    position: fixed;
+    pointer-events: none;
+    z-index: 200;
+    font-size: 1rem;
+    animation: keyParticleBurst 0.8s ease-out forwards;
+  }
+
+  @keyframes keyParticleBurst {
+    0% {
+      opacity: 1;
+      transform: translate(-50%, -50%) scale(1) rotate(0deg);
+    }
+    100% {
+      opacity: 0;
+      transform: translate(var(--tx), var(--ty)) scale(0.3) rotate(var(--rot));
+    }
+  }
+
   /* MIDI playback pulse */
   :global(.piano-key.midi-active) {
     animation: midiGlow 0.15s ease-out;
@@ -798,6 +872,18 @@
     color: #e1bee7;
   }
 
+  .sound-mode-btn.strings-mode {
+    background: rgba(139, 69, 19, 0.2);
+    border-color: rgba(205, 133, 63, 0.5);
+    color: #deb887;
+  }
+
+  .sound-mode-btn.strings-mode:hover {
+    background: rgba(139, 69, 19, 0.3);
+    border-color: rgba(205, 133, 63, 0.7);
+    color: #f5deb3;
+  }
+
   .mode-icon {
     font-size: 1rem;
     line-height: 1;
@@ -838,6 +924,7 @@
     var audioContext = null;
     var synth = null;
     var chipSynth = null;
+    var stringsSynth = null;
     var midiData = null;
     var isPlaying = false;
     var playbackTimeouts = [];
@@ -1141,6 +1228,81 @@
           }
         }
       };
+
+      // Strings synth - Warm orchestral string sound
+      stringsSynth = {
+        activeNotes: new Map(),
+        play: function(midiNote) {
+          if (!audioContext) return;
+          var frequency = 440 * Math.pow(2, (midiNote - 69) / 12);
+          var t = audioContext.currentTime;
+
+          // Rich string sound: sawtooth waves with slow attack
+          var oscillators = [];
+          var gains = [];
+          var masterGain = audioContext.createGain();
+
+          // Multiple detuned sawtooth oscillators for ensemble effect
+          var detunes = [-12, -5, 0, 5, 12];
+          detunes.forEach(function(detune, i) {
+            var osc = audioContext.createOscillator();
+            var oscGain = audioContext.createGain();
+
+            osc.type = 'sawtooth';
+            osc.frequency.setValueAtTime(frequency, t);
+            osc.detune.setValueAtTime(detune, t);
+
+            // Slow attack for bowed string feel
+            var amp = 0.15 / detunes.length;
+            oscGain.gain.setValueAtTime(0, t);
+            oscGain.gain.linearRampToValueAtTime(amp * volume, t + 0.15); // Slow attack
+            oscGain.gain.setValueAtTime(amp * volume, t + 0.2);
+
+            osc.connect(oscGain);
+            oscGain.connect(masterGain);
+            osc.start(t);
+
+            oscillators.push(osc);
+            gains.push(oscGain);
+          });
+
+          // Warm low-pass filter
+          var filter = audioContext.createBiquadFilter();
+          filter.type = 'lowpass';
+          filter.frequency.setValueAtTime(2000 + frequency, t);
+          filter.Q.setValueAtTime(0.5, t);
+
+          masterGain.connect(filter);
+          filter.connect(compressor);
+          filter.connect(reverbNode); // Strings sound great with reverb
+
+          this.activeNotes.set(midiNote, {
+            oscillators: oscillators,
+            gains: gains,
+            masterGain: masterGain
+          });
+        },
+        stop: function(midiNote) {
+          if (!audioContext) return;
+          var note = this.activeNotes.get(midiNote);
+          if (note) {
+            var t = audioContext.currentTime;
+            // Slow release for natural string decay
+            note.gains.forEach(function(g) {
+              g.gain.cancelScheduledValues(t);
+              g.gain.setValueAtTime(g.gain.value, t);
+              g.gain.exponentialRampToValueAtTime(0.0001, t + 0.3);
+            });
+
+            setTimeout(function() {
+              note.oscillators.forEach(function(osc) {
+                try { osc.stop(); } catch(e) {}
+              });
+            }, 400);
+            this.activeNotes.delete(midiNote);
+          }
+        }
+      };
     }
 
     // Visualizer bars
@@ -1158,19 +1320,63 @@
       }
     }
 
+    // Key particle burst effect
+    var particleSymbols = ['♪', '♫', '♬', '✦', '✧', '★'];
+    function createKeyParticles(keyElement) {
+      if (!keyElement) return;
+      var rect = keyElement.getBoundingClientRect();
+      var centerX = rect.left + rect.width / 2;
+      var centerY = rect.top;
+
+      // Create 3-5 particles
+      var numParticles = 3 + Math.floor(Math.random() * 3);
+      for (var i = 0; i < numParticles; i++) {
+        var particle = document.createElement('span');
+        particle.className = 'key-particle';
+        particle.textContent = particleSymbols[Math.floor(Math.random() * particleSymbols.length)];
+        particle.style.left = centerX + 'px';
+        particle.style.top = centerY + 'px';
+        particle.style.color = 'rgba(212, 175, 55, ' + (0.6 + Math.random() * 0.4) + ')';
+        particle.style.textShadow = '0 0 10px rgba(212, 175, 55, 0.8)';
+
+        // Random direction
+        var angle = -Math.PI / 2 + (Math.random() - 0.5) * Math.PI; // Upward spread
+        var distance = 40 + Math.random() * 60;
+        var tx = Math.cos(angle) * distance;
+        var ty = Math.sin(angle) * distance;
+
+        particle.style.setProperty('--tx', tx + 'px');
+        particle.style.setProperty('--ty', ty + 'px');
+        particle.style.setProperty('--rot', (Math.random() * 360) + 'deg');
+
+        document.body.appendChild(particle);
+        setTimeout(function(p) {
+          return function() { p.remove(); };
+        }(particle), 800);
+      }
+    }
+
     function playNote(midiNote) {
       initAudio();
       if (soundMode === 'chip' && chipSynth) {
         chipSynth.play(midiNote);
+      } else if (soundMode === 'strings' && stringsSynth) {
+        stringsSynth.play(midiNote);
       } else if (synth) {
         synth.play(midiNote);
       }
       triggerVisualizer();
+
+      // Trigger particle burst on key
+      var keyElement = pianoKeyboard.querySelector('[data-note="' + midiNote + '"]');
+      createKeyParticles(keyElement);
     }
 
     function stopNote(midiNote) {
       if (soundMode === 'chip' && chipSynth) {
         chipSynth.stop(midiNote);
+      } else if (soundMode === 'strings' && stringsSynth) {
+        stringsSynth.stop(midiNote);
       } else if (synth) {
         synth.stop(midiNote);
       }
@@ -1270,25 +1476,34 @@
       });
     }
 
-    // Sound mode toggle
+    // Sound mode toggle (cycles: piano -> chip -> strings -> piano)
     if (soundModeBtn) {
       soundModeBtn.addEventListener('click', function() {
         initAudio();
         var pianoIcon = soundModeBtn.querySelector('.piano-icon');
         var chipIcon = soundModeBtn.querySelector('.chip-icon');
+        var stringsIcon = soundModeBtn.querySelector('.strings-icon');
         var modeLabel = soundModeBtn.querySelector('.mode-label');
+
+        // Hide all icons first
+        if (pianoIcon) pianoIcon.classList.add('hidden');
+        if (chipIcon) chipIcon.classList.add('hidden');
+        if (stringsIcon) stringsIcon.classList.add('hidden');
+        soundModeBtn.classList.remove('chip-mode', 'strings-mode');
 
         if (soundMode === 'piano') {
           soundMode = 'chip';
           soundModeBtn.classList.add('chip-mode');
-          if (pianoIcon) pianoIcon.classList.add('hidden');
           if (chipIcon) chipIcon.classList.remove('hidden');
           if (modeLabel) modeLabel.textContent = 'Chip';
+        } else if (soundMode === 'chip') {
+          soundMode = 'strings';
+          soundModeBtn.classList.add('strings-mode');
+          if (stringsIcon) stringsIcon.classList.remove('hidden');
+          if (modeLabel) modeLabel.textContent = 'Strings';
         } else {
           soundMode = 'piano';
-          soundModeBtn.classList.remove('chip-mode');
           if (pianoIcon) pianoIcon.classList.remove('hidden');
-          if (chipIcon) chipIcon.classList.add('hidden');
           if (modeLabel) modeLabel.textContent = 'Piano';
         }
       });
@@ -1349,5 +1564,102 @@
 
     // Create the keyboard
     createKeyboard();
+
+    // Melody Presets - Simple recognizable patterns
+    var melodies = {
+      'ff-prelude': {
+        // Ascending arpeggio pattern (C major arpeggio, multiple octaves)
+        notes: [48, 52, 55, 60, 64, 67, 72, 76, 79, 84, 79, 76, 72, 67, 64, 60, 55, 52],
+        tempo: 120
+      },
+      'chrono': {
+        // Gentle descending pattern
+        notes: [72, 71, 69, 67, 69, 67, 64, 62, 64, 67, 69, 67],
+        tempo: 200
+      },
+      'zelda': {
+        // Peaceful lullaby-style pattern
+        notes: [62, 69, 67, 64, 62, 69, 67, 64, 62, 64, 67, 69],
+        tempo: 300
+      },
+      'mario': {
+        // Bouncy ascending pattern
+        notes: [64, 64, 64, 60, 64, 67, 55, 60, 55, 52, 57, 58, 57, 55, 64, 67, 69],
+        tempo: 150
+      }
+    };
+
+    var melodyTimeouts = [];
+    var currentMelodyBtn = null;
+
+    function playMelody(melodyName) {
+      // Stop any playing melody
+      stopMelody();
+
+      var melody = melodies[melodyName];
+      if (!melody) return;
+
+      initAudio();
+
+      var btn = document.querySelector('[data-melody="' + melodyName + '"]');
+      if (btn) {
+        btn.classList.add('playing');
+        currentMelodyBtn = btn;
+      }
+
+      melody.notes.forEach(function(note, index) {
+        var noteOnTime = index * melody.tempo;
+        var noteOffTime = noteOnTime + melody.tempo * 0.8;
+
+        var onTimeout = setTimeout(function() {
+          playNote(note);
+          highlightKey(note, true);
+        }, noteOnTime);
+
+        var offTimeout = setTimeout(function() {
+          stopNote(note);
+          highlightKey(note, false);
+        }, noteOffTime);
+
+        melodyTimeouts.push(onTimeout, offTimeout);
+      });
+
+      // Clear playing state after melody ends
+      var endTimeout = setTimeout(function() {
+        if (currentMelodyBtn) {
+          currentMelodyBtn.classList.remove('playing');
+          currentMelodyBtn = null;
+        }
+      }, melody.notes.length * melody.tempo + 200);
+      melodyTimeouts.push(endTimeout);
+    }
+
+    function stopMelody() {
+      melodyTimeouts.forEach(function(t) { clearTimeout(t); });
+      melodyTimeouts = [];
+
+      document.querySelectorAll('.piano-key.active').forEach(function(key) {
+        var midiNote = parseInt(key.dataset.note || '0');
+        stopNote(midiNote);
+        key.classList.remove('active');
+      });
+
+      if (currentMelodyBtn) {
+        currentMelodyBtn.classList.remove('playing');
+        currentMelodyBtn = null;
+      }
+    }
+
+    // Attach melody button listeners
+    document.querySelectorAll('.preset-btn').forEach(function(btn) {
+      btn.addEventListener('click', function() {
+        var melodyName = btn.getAttribute('data-melody');
+        if (btn.classList.contains('playing')) {
+          stopMelody();
+        } else {
+          playMelody(melodyName);
+        }
+      });
+    });
   });
 </script>

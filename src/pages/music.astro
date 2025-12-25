@@ -45,43 +45,67 @@ const base = import.meta.env.BASE_URL || '/';
 
     <h2 class="text-xl sm:text-2xl font-heading font-bold mb-4 sm:mb-6">Discography</h2>
     <div class="grid grid-cols-2 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-3 sm:gap-6 mb-8 sm:mb-12">
-      <a href="https://open.spotify.com/album/0xo3KEZ5k8dDaQ0refhVnY" target="_blank" class="card p-2 sm:p-4 hover:scale-105 transition-transform">
-        <img src={`${base}albums/chrono-trigger.jpg`} alt="Beyond the Flow of Time" class="aspect-square rounded-lg mb-2 sm:mb-4 object-cover w-full" />
+      <a href="https://open.spotify.com/album/0xo3KEZ5k8dDaQ0refhVnY" target="_blank" class="album-card card p-2 sm:p-4">
+        <div class="vinyl-container">
+          <div class="vinyl-disc"></div>
+          <img src={`${base}albums/chrono-trigger.jpg`} alt="Beyond the Flow of Time" class="album-cover" />
+        </div>
         <h3 class="font-semibold text-xs sm:text-base leading-tight">Beyond the Flow of Time</h3>
         <p class="text-text-secondary text-xs sm:text-sm">Chrono Trigger • 2021</p>
       </a>
-      <a href="https://open.spotify.com/album/0ALyspGJt0uJbtaEU7iqsz" target="_blank" class="card p-2 sm:p-4 hover:scale-105 transition-transform">
-        <img src={`${base}albums/ff6-symphony.jpg`} alt="The Final Fantasy VI Symphony" class="aspect-square rounded-lg mb-2 sm:mb-4 object-cover w-full" />
+      <a href="https://open.spotify.com/album/0ALyspGJt0uJbtaEU7iqsz" target="_blank" class="album-card card p-2 sm:p-4">
+        <div class="vinyl-container">
+          <div class="vinyl-disc"></div>
+          <img src={`${base}albums/ff6-symphony.jpg`} alt="The Final Fantasy VI Symphony" class="album-cover" />
+        </div>
         <h3 class="font-semibold text-xs sm:text-base leading-tight">FF VI Symphony</h3>
         <p class="text-text-secondary text-xs sm:text-sm">Full Orchestra • 2016</p>
       </a>
-      <a href="https://open.spotify.com/album/2hsPHISPcb0Bwm026DBlNI" target="_blank" class="card p-2 sm:p-4 hover:scale-105 transition-transform">
-        <img src={`${base}albums/bloodlines.jpg`} alt="BLOODLINES" class="aspect-square rounded-lg mb-2 sm:mb-4 object-cover w-full" />
+      <a href="https://open.spotify.com/album/2hsPHISPcb0Bwm026DBlNI" target="_blank" class="album-card card p-2 sm:p-4">
+        <div class="vinyl-container">
+          <div class="vinyl-disc"></div>
+          <img src={`${base}albums/bloodlines.jpg`} alt="BLOODLINES" class="album-cover" />
+        </div>
         <h3 class="font-semibold text-xs sm:text-base leading-tight">BLOODLINES</h3>
         <p class="text-text-secondary text-xs sm:text-sm">Castlevania • 2020</p>
       </a>
-      <a href="https://open.spotify.com/album/6A5rBA0W8hfaGWx98KYu5A" target="_blank" class="card p-2 sm:p-4 hover:scale-105 transition-transform">
-        <img src={`${base}albums/songs-from-spira.jpg`} alt="Songs From Spira" class="aspect-square rounded-lg mb-2 sm:mb-4 object-cover w-full" />
+      <a href="https://open.spotify.com/album/6A5rBA0W8hfaGWx98KYu5A" target="_blank" class="album-card card p-2 sm:p-4">
+        <div class="vinyl-container">
+          <div class="vinyl-disc"></div>
+          <img src={`${base}albums/songs-from-spira.jpg`} alt="Songs From Spira" class="album-cover" />
+        </div>
         <h3 class="font-semibold text-xs sm:text-base leading-tight">Songs From Spira</h3>
         <p class="text-text-secondary text-xs sm:text-sm">Final Fantasy X • 2019</p>
       </a>
-      <a href="https://open.spotify.com/album/3Or1TygOANKULV6Qx2OGJ1" target="_blank" class="card p-2 sm:p-4 hover:scale-105 transition-transform">
-        <img src={`${base}albums/promise-ff8.jpg`} alt="Promise" class="aspect-square rounded-lg mb-2 sm:mb-4 object-cover w-full" />
+      <a href="https://open.spotify.com/album/3Or1TygOANKULV6Qx2OGJ1" target="_blank" class="album-card card p-2 sm:p-4">
+        <div class="vinyl-container">
+          <div class="vinyl-disc"></div>
+          <img src={`${base}albums/promise-ff8.jpg`} alt="Promise" class="album-cover" />
+        </div>
         <h3 class="font-semibold text-xs sm:text-base leading-tight">Promise</h3>
         <p class="text-text-secondary text-xs sm:text-sm">Final Fantasy VIII • 2016</p>
       </a>
-      <a href="https://open.spotify.com/album/3bF9qLWmQp4Y0r8aEsBrIa" target="_blank" class="card p-2 sm:p-4 hover:scale-105 transition-transform">
-        <img src={`${base}albums/fight-jrpg.jpg`} alt="FIGHT!" class="aspect-square rounded-lg mb-2 sm:mb-4 object-cover w-full" />
+      <a href="https://open.spotify.com/album/3bF9qLWmQp4Y0r8aEsBrIa" target="_blank" class="album-card card p-2 sm:p-4">
+        <div class="vinyl-container">
+          <div class="vinyl-disc"></div>
+          <img src={`${base}albums/fight-jrpg.jpg`} alt="FIGHT!" class="album-cover" />
+        </div>
         <h3 class="font-semibold text-xs sm:text-base leading-tight">FIGHT!</h3>
         <p class="text-text-secondary text-xs sm:text-sm">JRPG Battles • 2021</p>
       </a>
-      <a href="https://open.spotify.com/album/6aXyVzElMqu2SXPEwtvQi5" target="_blank" class="card p-2 sm:p-4 hover:scale-105 transition-transform">
-        <img src={`${base}albums/place-to-rest.jpg`} alt="A Place to Rest" class="aspect-square rounded-lg mb-2 sm:mb-4 object-cover w-full" />
+      <a href="https://open.spotify.com/album/6aXyVzElMqu2SXPEwtvQi5" target="_blank" class="album-card card p-2 sm:p-4">
+        <div class="vinyl-container">
+          <div class="vinyl-disc"></div>
+          <img src={`${base}albums/place-to-rest.jpg`} alt="A Place to Rest" class="album-cover" />
+        </div>
         <h3 class="font-semibold text-xs sm:text-base leading-tight">A Place to Rest</h3>
         <p class="text-text-secondary text-xs sm:text-sm">Resident Evil • 2021</p>
       </a>
-      <a href="https://open.spotify.com/album/2N4LJNvQLEICfVnTYKLudb" target="_blank" class="card p-2 sm:p-4 hover:scale-105 transition-transform">
-        <img src={`${base}albums/place-to-call-home.jpg`} alt="A Place to Call Home" class="aspect-square rounded-lg mb-2 sm:mb-4 object-cover w-full" />
+      <a href="https://open.spotify.com/album/2N4LJNvQLEICfVnTYKLudb" target="_blank" class="album-card card p-2 sm:p-4">
+        <div class="vinyl-container">
+          <div class="vinyl-disc"></div>
+          <img src={`${base}albums/place-to-call-home.jpg`} alt="A Place to Call Home" class="album-cover" />
+        </div>
         <h3 class="font-semibold text-xs sm:text-base leading-tight">A Place to Call Home</h3>
         <p class="text-text-secondary text-xs sm:text-sm">Final Fantasy IX • 2018</p>
       </a>
@@ -131,3 +155,122 @@ const base = import.meta.env.BASE_URL || '/';
     </div>
   </section>
 </Layout>
+
+<style>
+  /* Vinyl Record Effect */
+  .album-card {
+    transition: transform 0.3s ease;
+  }
+
+  .album-card:hover {
+    transform: scale(1.02);
+  }
+
+  .vinyl-container {
+    position: relative;
+    aspect-ratio: 1;
+    margin-bottom: 0.5rem;
+    overflow: visible;
+  }
+
+  @media (min-width: 640px) {
+    .vinyl-container {
+      margin-bottom: 1rem;
+    }
+  }
+
+  .vinyl-disc {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    width: 90%;
+    height: 90%;
+    background: radial-gradient(circle at center,
+      #1a1a1a 0%,
+      #1a1a1a 15%,
+      #d4af37 15.5%,
+      #d4af37 16%,
+      #0a0a0a 16.5%,
+      #1a1a1a 20%,
+      #0a0a0a 25%,
+      #1a1a1a 30%,
+      #0a0a0a 35%,
+      #1a1a1a 40%,
+      #0a0a0a 45%,
+      #1a1a1a 50%,
+      #0a0a0a 55%,
+      #1a1a1a 60%,
+      #0a0a0a 65%,
+      #1a1a1a 70%,
+      #0a0a0a 100%
+    );
+    border-radius: 50%;
+    transform: translate(-50%, -50%) translateX(0);
+    transition: transform 0.4s ease;
+    z-index: 0;
+    box-shadow: 0 4px 20px rgba(0, 0, 0, 0.5);
+  }
+
+  /* Vinyl shine effect */
+  .vinyl-disc::after {
+    content: '';
+    position: absolute;
+    inset: 0;
+    background: linear-gradient(135deg,
+      transparent 0%,
+      rgba(255, 255, 255, 0.1) 30%,
+      transparent 50%,
+      rgba(255, 255, 255, 0.05) 70%,
+      transparent 100%
+    );
+    border-radius: 50%;
+  }
+
+  .album-cover {
+    position: relative;
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    border-radius: 0.5rem;
+    z-index: 1;
+    transition: transform 0.4s ease;
+    box-shadow: 0 4px 15px rgba(0, 0, 0, 0.3);
+  }
+
+  /* Hover: slide cover to reveal spinning vinyl */
+  .album-card:hover .album-cover {
+    transform: translateX(-15%);
+  }
+
+  .album-card:hover .vinyl-disc {
+    transform: translate(-50%, -50%) translateX(20%);
+    animation: vinylSpin 2s linear infinite;
+  }
+
+  @keyframes vinylSpin {
+    from {
+      transform: translate(-50%, -50%) translateX(20%) rotate(0deg);
+    }
+    to {
+      transform: translate(-50%, -50%) translateX(20%) rotate(360deg);
+    }
+  }
+
+  /* Mobile: simpler effect */
+  @media (max-width: 640px) {
+    .album-card:hover .album-cover {
+      transform: translateX(-10%);
+    }
+    .album-card:hover .vinyl-disc {
+      transform: translate(-50%, -50%) translateX(15%);
+    }
+    @keyframes vinylSpin {
+      from {
+        transform: translate(-50%, -50%) translateX(15%) rotate(0deg);
+      }
+      to {
+        transform: translate(-50%, -50%) translateX(15%) rotate(360deg);
+      }
+    }
+  }
+</style>
